@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1044259338690",
+    "firebase_url": "https://pruebahorario-f5c26.firebaseio.com",
+    "project_id": "pruebahorario-f5c26",
+    "storage_bucket": "pruebahorario-f5c26.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044259338690:android:f9c73d6e36125495df3e5b",
+        "android_client_info": {
+          "package_name": "cervantes.jonatan.pruebahorario"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1044259338690-k1vn8phl6uht1f4557rjt5dr6so0nba5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cervantes.jonatan.pruebahorario",
+            "certificate_hash": "c7ced50feebf6b944140091a1a589c6cabb755c4"
+          }
+        },
+        {
+          "client_id": "1044259338690-f8pf174ojakh8q1t7ipmaurqaau2l3ii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfPcyRGDTw6eAg4MIRYtg3z_vp-otobbU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1044259338690-f8pf174ojakh8q1t7ipmaurqaau2l3ii.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

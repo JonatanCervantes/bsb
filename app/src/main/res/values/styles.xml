@@ -1,0 +1,51 @@
+<resources>
+    <style name="dialog">
+        <item
+            name="android:windowIsFloating">true</item>
+        <!-- float the window so it does not fill the screen -->
+        <item
+            name="android:windowNoTitle">true</item>
+        <!-- remove the title bar we make our own-->
+        <item
+            name="android:windowContentOverlay">@null</item>
+        <!-- remove the shadow from under the title bar -->
+        <item name="android:background">@drawable/background_citas_default</item>
+
+
+    </style>
+
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="fontFamily">@font/gravity_regular</item>
+        <item name="android:textColor">@color/dustyWhite</item>
+        <item name="android:dialogTheme">@style/dialog</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="TimePickerTheme" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/holo_green_dark</item>
+        <item name="colorPrimary">@android:color/holo_green_light</item>
+        <item name="colorPrimaryDark">@android:color/holo_green_dark</item>
+        <item name="colorAccent">#0F7E03</item>
+        <item name="android:textColor">@color/fullWhite</item>
+    </style>
+
+
+
+
+
+
+</resources>

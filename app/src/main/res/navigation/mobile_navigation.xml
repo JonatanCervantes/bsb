@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_empleados">
+
+    <fragment
+        android:id="@+id/nav_citas"
+        android:name="cervantes.jonatan.pruebahorario.ui.citas.CitasFragment"
+        android:label="@string/menu_citas"
+        tools:layout="@layout/fragment_citas"/>
+
+    <fragment
+        android:id="@+id/nav_servicios"
+        android:name="cervantes.jonatan.pruebahorario.ui.servicios.ServiciosFragment"
+        android:label="@string/menu_servicios"
+        tools:layout="@layout/fragment_servicios" />
+
+    <fragment
+        android:id="@+id/nav_empleados"
+        android:name="cervantes.jonatan.pruebahorario.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_empleados"
+        tools:layout="@layout/fragment_slideshow" />
+</navigation>

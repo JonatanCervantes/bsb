@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.citas.CitasFragment">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3">
+
+        <ImageButton
+            android:id="@+id/btn_ayer"
+            android:src="@drawable/ic_arrow_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/transparent"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+           />
+
+        <TextView
+            android:id="@+id/tv_diaActual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha actual"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"/>
+
+        <ImageButton
+            android:id="@+id/btn_manana"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_arrow_forward"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"/>
+    </GridLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_citas"/>
+
+</LinearLayout>

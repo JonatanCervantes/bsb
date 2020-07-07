@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="600dp"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_detallesCita"
+        android:text="DETALLES DE LA CITA"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:textSize="20sp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_fechaCita"
+        android:layout_gravity="center"
+        android:gravity="fill"
+        android:text="FECHA DE LA CITA"
+        android:layout_margin="10dp"/>
+
+    <Spinner
+        android:id="@+id/spinner_empleados"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/arreglo_empleados"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        />
+
+    <Spinner
+        android:id="@+id/spinner_servicios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/arreglo_servicios"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_cancel"
+            android:text="CANCEL"
+            android:gravity="center"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_ok"
+            android:text="OK"
+            android:gravity="center"
+            android:layout_weight="1"
+            />
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

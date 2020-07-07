@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">PruebaHorario</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_citas">Citas</string>
+    <string name="menu_servicios">Servicios</string>
+    <string name="menu_empleados">Empleados</string>
+
+    <string name="home_second">Home Second</string>
+
+    <string name="disponible">Hora Disponible</string>
+
+    <string name="web_client_id">1044259338690-f8pf174ojakh8q1t7ipmaurqaau2l3ii.apps.googleusercontent.com</string>
+
+
+    <!-- Strings para los horarios -->
+
+    <string-array name="horarios">
+        <item>11:00</item>
+        <item>11:30</item>
+        <item>12:00</item>
+        <item>12:30</item>
+        <item>13:00</item>
+        <item>13:30</item>
+        <item>14:00</item>
+        <item>14:30</item>
+        <item>15:00</item>
+        <item>15:30</item>
+        <item>16:00</item>
+        <item>16:30</item>
+        <item>17:00</item>
+        <item>17:30</item>
+        <item>18:00</item>
+        <item>18:30</item>
+        <item>19:00</item>
+
+    </string-array>
+
+    <string-array name="arreglo_empleados">
+        <item>Empleado</item>
+        <item>Yael</item>
+        <item>Jonatan</item>
+        <item>Cervantes</item>
+    </string-array>
+
+    <string-array name="arreglo_servicios">
+        <item>Servicio</item>
+        <item>Servicio 1</item>
+        <item>Servicio 2</item>
+        <item>Servicio 3</item>
+    </string-array>
+
+
+</resources>
