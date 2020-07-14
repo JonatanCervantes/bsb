@@ -1,8 +1,10 @@
 package cervantes.jonatan.pruebahorario.ui.servicios
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,13 +72,13 @@ class ServiciosFragment : Fragment() {
         rv_servicios.layoutManager = LinearLayoutManager(view.context)
 
 
-        val fabAgregarServicio: FloatingActionButton = view.findViewById(R.id.fab_agregar)
+        val fabAgregarServicio: FloatingActionButton = view.findViewById(R.id.fab_agregarServicio)
         fabAgregarServicio.setOnClickListener { view ->
             var dialog: AgregarServicioDialog =
                 AgregarServicioDialog()
             dialog.show(fragmentManager!!, "AgregarServicioDialog")
         }
-        val fabEliminarServicio:FloatingActionButton = view.findViewById(R.id.fab_eliminar)
+        val fabEliminarServicio:FloatingActionButton = view.findViewById(R.id.fab_eliminarServicio)
         fabEliminarServicio.setOnClickListener {
             eliminarActivado = !eliminarActivado
 
@@ -94,7 +96,12 @@ class ServiciosFragment : Fragment() {
     }
 
     private fun habilitarAdminServicios() {
-        if(RolUsuario.permisosUsuario.equals(TiposUsuario.CLIENTE.name)) {
+        val sharedPref = activity?.getSharedPreferences(
+            getString(R.string.preference_file_key), Context.MODE_PRIVATE) ?: return
+        val rolActual = sharedPref.getString(getString(R.string.rol_usuario), "defaultValue")
+
+        Log.d("EmpleadosFragment", rolActual)
+        if(rolActual == (TiposUsuario.EMPLEADO.name)) {
             rl_adminServicios.isEnabled = true
             rl_adminServicios.isVisible = true
         }

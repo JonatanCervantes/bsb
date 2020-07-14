@@ -1,12 +1,15 @@
 package cervantes.jonatan.pruebahorario
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.core.view.isVisible
 import cervantes.jonatan.pruebahorario.utilidades.TiposUsuario
 import cervantes.jonatan.pruebahorario.entidades.Usuario
+import cervantes.jonatan.pruebahorario.utilidades.RolUsuario
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -18,13 +21,18 @@ import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
+import kotlin.coroutines.CoroutineContext
 
 const val REQUEST_CODE_SIGN_IN = 999
 
 class LoginActivity : AppCompatActivity() {
 
     lateinit var auth: FirebaseAuth
+    lateinit var account: GoogleSignInAccount
     private val usuariosCollectionRef = Firebase.firestore.collection("usuarios")
+    private val clavesCollectionRef = Firebase.firestore.collection("claves")
+    private var empleadoVerificado = false
+    private val key = "ROL_USUARIO"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +52,38 @@ class LoginActivity : AppCompatActivity() {
                 startActivityForResult(it, REQUEST_CODE_SIGN_IN)
             }
         }
+
+        cb_soyUnEmpleado.setOnClickListener {
+            if(cb_soyUnEmpleado.isChecked) {
+                rl_verificarEmpleado.isEnabled = true
+                rl_verificarEmpleado.isVisible = true
+            } else {
+                rl_verificarEmpleado.isEnabled = false
+                rl_verificarEmpleado.isVisible = false
+            }
+        }
+
+        val sharedPref = this?.getSharedPreferences(
+            getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+
+        btn_verificarEmpleado.setOnClickListener {
+            val clave = et_claveEmpleado.text.toString()
+
+            //MANERA CORRECTA (APARENTEMENTE) DE MANEJAR LAS EJECUCIONES ASINCRONAS ...
+            val empleadoVerificadoDeferred = verificarClaveEmpleadoAsync(clave)
+
+           CoroutineScope(Dispatchers.IO).launch {
+                if(empleadoVerificadoDeferred.await()) {
+                    empleadoVerificado = true
+                    crearPreferenciasCompartidasLaunch(empleadoVerificado)
+                }
+
+            }
+            //HASTA AQUI
+
+
+        }
+
     }
 
     override fun onStart() {
@@ -55,11 +95,11 @@ class LoginActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == REQUEST_CODE_SIGN_IN) {
-            val account  = GoogleSignIn.getSignedInAccountFromIntent(data).result
+            account  = GoogleSignIn.getSignedInAccountFromIntent(data).result!!
 
             account?.let {
+                crearPreferenciasCompartidasLaunch(empleadoVerificado)
                 googleAuthForFirebase(it)
-
             }
         }
 
@@ -104,7 +144,7 @@ class LoginActivity : AppCompatActivity() {
         var usuarioNoRegistrado = true
         val coincidencias = CoroutineScope(Dispatchers.IO).async {
             try {
-                var querySnapshot = usuariosCollectionRef.whereEqualTo("idUsuario", auth.uid).get().await()
+                val querySnapshot = usuariosCollectionRef.whereEqualTo("idUsuario", auth.uid).get().await()
                 usuarioNoRegistrado = querySnapshot.isEmpty
             } catch (e:Exception) {
                Log.d("LoginActivity", e.message)
@@ -113,7 +153,7 @@ class LoginActivity : AppCompatActivity() {
 
        runBlocking {
             coincidencias.await()
-            Log.d("LoginActivity", "Termino de esperar coincidencias")
+            Log.d("LoginActivity", "Termino de esperar coincidencias para usuarios registrados")
         }
 
         Log.d("LoginActivity", "Regreso $usuarioNoRegistrado")
@@ -121,11 +161,69 @@ class LoginActivity : AppCompatActivity() {
         return usuarioNoRegistrado
     }
 
+    private fun verificarClaveEmpleadoAsync(clave:String) = CoroutineScope(Dispatchers.IO).async {
+        verificarClaveEmpleado(clave)
+    }
+
+    private suspend fun verificarClaveEmpleado(clave:String) : Boolean {
+            try {
+                val query = clavesCollectionRef.whereEqualTo("clave", clave).get().await()
+                if(!query.isEmpty) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@LoginActivity, "Empleado verificado correctamente", Toast.LENGTH_LONG).show()
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@LoginActivity, "Clave incorrecta", Toast.LENGTH_LONG).show()
+                    }
+                }
+            } catch (e:Exception) {
+                Log.d("LoginActivity", e.message)
+            }
+        return true
+    }
+
+    private fun crearPreferenciasCompartidasLaunch(empleadoVerificado: Boolean) = CoroutineScope(Dispatchers.IO).launch {
+        crearPreferenciasCompartidas(empleadoVerificado)
+    }
+
+    private suspend fun crearPreferenciasCompartidas(empleadoVerificado:Boolean) {
+        lateinit var tipoEmpleado:String
+        if(empleadoVerificado) {
+            tipoEmpleado = TiposUsuario.EMPLEADO.name
+        } else {
+            tipoEmpleado = TiposUsuario.CLIENTE.name
+        }
+
+        try {
+            val sharedPref = this?.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+
+            with (sharedPref.edit()) {
+
+                putString(getString(R.string.rol_usuario), tipoEmpleado)
+                apply()
+            }
+
+        } catch (e:Exception) {
+            Log.d("LoginActivity", e.message)
+        }
+
+    }
+
+
     private fun registrarUsuario(account: GoogleSignInAccount) {
         val nombre = account.displayName
         val email = account.email
         val idUsuario = auth.uid
-        val tipoUsuario = TiposUsuario.CLIENTE.name
+        lateinit var tipoUsuario:String
+
+        if(empleadoVerificado) {
+            tipoUsuario = TiposUsuario.EMPLEADO.name
+        } else {
+            tipoUsuario = TiposUsuario.CLIENTE.name
+        }
+
 
         var usuario = Usuario(nombre!!, email!!, tipoUsuario, idUsuario!!)
         CoroutineScope(Dispatchers.IO).launch {
@@ -139,6 +237,8 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+
 
 
 

@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view"   >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single" >
-        <item
-            android:id="@+id/nav_citas"
-            android:icon="@drawable/ic_baseline_calendar_today_24"
-            android:title="@string/menu_citas" />
-        <item
-            android:id="@+id/nav_servicios"
-            android:icon="@drawable/ic_baseline_format_list_bulleted_24"
-            android:title="@string/menu_servicios" />
-        <item
-            android:id="@+id/nav_empleados"
-            android:icon="@drawable/ic_baseline_face_24"
-            android:title="@string/menu_empleados" />
-    </group>
+        <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_home"
+                    android:icon="@drawable/ic_baseline_home_24"
+                    android:title="@string/menu_home" />
+                <item
+                    android:id="@+id/nav_citas"
+                    android:icon="@drawable/ic_baseline_calendar_today_24"
+                    android:title="@string/menu_citas" />
+                <item
+                    android:id="@+id/nav_servicios"
+                    android:icon="@drawable/ic_baseline_format_list_bulleted_24"
+                    android:title="@string/menu_servicios" />
+                <item
+                    android:id="@+id/nav_empleados"
+                    android:icon="@drawable/ic_baseline_face_24"
+                    android:title="@string/menu_empleados" />
+        </group>
+
+        <item android:title="Acciones">
+                <menu>
+                        <item
+                            android:id="@+id/menu_cerrarSesion"
+                            android:icon="@drawable/ic_baseline_exit_to_app_24"
+                            android:title="@string/cerrarSesion"
+                            android:onClick="cerrarSesion"
+                            />
+                </menu>
+        </item>
+
 </menu>

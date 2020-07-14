@@ -1,13 +1,13 @@
-package cervantes.jonatan.pruebahorario.ui.slideshow
+package cervantes.jonatan.pruebahorario.ui.empleados
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SlideshowViewModel : ViewModel() {
+class EmpleadosViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "Futura pantalla de bienvenida"
+        //value = "Pantalla de empleados"
     }
     val text: LiveData<String> = _text
 }

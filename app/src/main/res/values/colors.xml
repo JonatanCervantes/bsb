@@ -16,6 +16,7 @@
 
     <color name="primaryBackground">#232526</color>
     <color name="secondaryBackground">#414345</color>
+    <color name="transparentBackground">#00FFFFFF</color>
 
     <color name="citasDisponiblePrimary">#095007</color>
     <color name="citasDisponibleSecondary">#1C681A</color>

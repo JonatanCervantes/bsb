@@ -1,47 +1,89 @@
 <resources>
-    <style name="dialog">
-        <item
-            name="android:windowIsFloating">true</item>
-        <!-- float the window so it does not fill the screen -->
-        <item
-            name="android:windowNoTitle">true</item>
-        <!-- remove the title bar we make our own-->
-        <item
-            name="android:windowContentOverlay">@null</item>
-        <!-- remove the shadow from under the title bar -->
-        <item name="android:background">@drawable/background_citas_default</item>
 
 
-    </style>
-
-
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="fontFamily">@font/gravity_regular</item>
+    <style name="spinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
         <item name="android:textColor">@color/dustyWhite</item>
-        <item name="android:dialogTheme">@style/dialog</item>
+        <item name="itemTextColor">@color/dustyWhite</item>
+        <item name="android:textColorSecondary">@color/dustyWhite</item>
+    </style>
+    <style name="spinnerDropDownItem" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:textColor">@color/dustyWhite</item>
+        <item name="itemTextColor">@color/dustyWhite</item>
+        <item name="android:textColorSecondary">@color/dustyWhite</item>
+
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="imageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="tint">@color/dustyWhite</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="navDrawer" parent="Widget.Design.NavigationView">
+        <item name="itemTextColor">@color/dustyWhite</item>
+        <item name="itemIconTint">@color/fullWhite</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="textViewDialog" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/dustyWhite</item>
+        <item name="backgroundTint">@color/transparentBackground</item>
+
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_margin">3dp</item>
+
+    </style>
+
+    <style name="fragmentDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@drawable/background_citas_default</item>
+        <item name="android:textViewStyle">@style/textViewDialog</item>
+        <item name="android:textColorSecondary">@color/dustyWhite</item>
+
+        <item name="android:spinnerDropDownItemStyle">@style/spinnerDropDownItem</item>
+        <item name="android:spinnerItemStyle">@style/spinnerItem</item>
+
+    </style>
 
     <style name="TimePickerTheme" parent="Theme.AppCompat.Dialog">
         <item name="android:windowBackground">@android:color/holo_green_dark</item>
         <item name="colorPrimary">@android:color/holo_green_light</item>
         <item name="colorPrimaryDark">@android:color/holo_green_dark</item>
         <item name="colorAccent">#0F7E03</item>
-        <item name="android:textColor">@color/fullWhite</item>
+        <item name="android:textColor">@color/dustyWhite</item>
+
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="navigationViewStyle">@style/navDrawer</item>
+
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="fontFamily">@font/gravity_regular</item>
+        <item name="android:textColor">@color/dustyWhite</item>
+        <item name="android:dialogTheme">@style/fragmentDialog</item>
+        <item name="navigationViewStyle">@style/navDrawer</item>
+        <item name="android:textColorSecondary">@color/dustyWhite</item>
+        <!--
+        <item name="imageButtonStyle">@style/imageButton</item>
+        -->
+
+
+    </style>
+
+
+
+
 
 
 

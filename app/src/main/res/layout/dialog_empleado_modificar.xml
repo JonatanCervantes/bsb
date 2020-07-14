@@ -4,13 +4,11 @@
     android:layout_height="600dp"
     android:orientation="vertical"
     android:padding="15dp">
-
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_detallesCita"
-        android:text="DETALLES DE LA CITA"
+        android:id="@+id/tv_tituloModificarEmpleado"
+        android:text="MODIFICAR EMPLEADO"
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_margin="10dp"
@@ -18,32 +16,35 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_fechaCita"
+        android:id="@+id/tv_avisoModificarEmpleado"
         android:layout_gravity="center"
         android:gravity="fill"
-        android:text="FECHA DE LA CITA"
+        android:text="¿Está seguro que quiere modificar el empleado?"
         android:layout_margin="10dp"/>
 
-    <Spinner
-        android:id="@+id/spinner_empleados"
+    <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/arreglo_empleados"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        style="@style/spinnerItem"
-        />
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/rb_disponible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Disponible"
+            />
+        <RadioButton
+            android:id="@+id/rb_ocupado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ocupado"
+            />
+        <RadioButton
+            android:id="@+id/rb_fueraDeTurno"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fuera de turno"
+            />
 
-    <Spinner
-        android:id="@+id/spinner_servicios"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/arreglo_servicios"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        style="@style/spinnerDropDownItem"
-        />
-
+    </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,8 +55,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_cancel"
-            android:text="CANCEL"
+            android:id="@+id/tv_noModificarEmpleado"
+            android:text="NO"
             android:gravity="center"
             android:layout_weight="1"
             />
@@ -63,17 +64,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_ok"
-            android:text="OK"
+            android:id="@+id/tv_siModificarEmpleado"
+            android:text="SI"
             android:gravity="center"
             android:layout_weight="1"
             />
 
-
     </LinearLayout>
-
-
-
-
 
 </LinearLayout>

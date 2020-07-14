@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-class CitaCancelacionDialog : DialogFragment() {
+class EliminarCitaDialog : DialogFragment() {
 
     private lateinit var tv_no: TextView
     private lateinit var tv_si: TextView
@@ -30,7 +30,7 @@ class CitaCancelacionDialog : DialogFragment() {
     var contextoActivityMain: Context?= null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.dialog_cancelacion_cita, container, false)
+        val root = inflater.inflate(R.layout.dialog_cita_eliminar, container, false)
         return root
     }
 

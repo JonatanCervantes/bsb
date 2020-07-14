@@ -1,11 +1,10 @@
 package cervantes.jonatan.pruebahorario.utilidades
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import cervantes.jonatan.pruebahorario.dialogs.CitaCancelacionDialog
+import cervantes.jonatan.pruebahorario.dialogs.EliminarCitaDialog
 import cervantes.jonatan.pruebahorario.dialogs.AgregarCitaDialog
 import cervantes.jonatan.pruebahorario.R
 import cervantes.jonatan.pruebahorario.ui.citas.CitasFragment
@@ -43,8 +42,8 @@ class CitaAdapter(var citasRv: List<CitaRV>) : RecyclerView.Adapter<CitaAdapter.
                 tv_cita.setBackgroundResource(R.drawable.background_citas_ocupado)
                 tv_cita.setOnClickListener {
 
-                    var dialog: CitaCancelacionDialog =
-                        CitaCancelacionDialog()
+                    var dialog: EliminarCitaDialog =
+                        EliminarCitaDialog()
                     dialog.idDocumentoEliminar = citasRv[position].idDocumento
                     dialog.show(CitasFragment.adminFragmento!!, "CitaCancelacionDialog")
                 }
