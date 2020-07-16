@@ -42,7 +42,7 @@ class CitasFragment : Fragment() {
     private var fechaQueryActual: Calendar?= null
     private var fechaQueryFutura: Calendar?= null
     companion object {
-        var fechaSeleccionada: Calendar = Calendar.getInstance()
+        var fechaSeleccionada: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT-7"))
         var adminFragmento: FragmentManager?= null
 
         public fun inicializarFechas() {
@@ -133,12 +133,17 @@ class CitasFragment : Fragment() {
         }
     }
 
+    //EMPIEZA EL CAMBIADERO
+    private fun llenarListaRecyclerViewAsync() = CoroutineScope(Dispatchers.Default).async {
+
+    }
+
     private suspend fun llenarListaRecyclerView(): ArrayList<CitaRV> {
 
         var horarios: Array<String> = view!!.resources.getStringArray(R.array.horarios)
         var citaRvList = ArrayList<CitaRV>()
 
-        var fechaCalendar = Calendar.getInstance()
+        var fechaCalendar = Calendar.getInstance(TimeZone.getTimeZone("GMT-7"))
 
         Log.d("CitasFragment", "tamanio de las citas"+listaCitas.size.toString())
 

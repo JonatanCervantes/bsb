@@ -75,13 +75,11 @@ class LoginActivity : AppCompatActivity() {
            CoroutineScope(Dispatchers.IO).launch {
                 if(empleadoVerificadoDeferred.await()) {
                     empleadoVerificado = true
-                    crearPreferenciasCompartidasLaunch(empleadoVerificado)
+                    //crearPreferenciasCompartidasLaunch(empleadoVerificado)
                 }
 
             }
             //HASTA AQUI
-
-
         }
 
     }
@@ -172,6 +170,7 @@ class LoginActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(this@LoginActivity, "Empleado verificado correctamente", Toast.LENGTH_LONG).show()
                     }
+                    return true
                 } else {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(this@LoginActivity, "Clave incorrecta", Toast.LENGTH_LONG).show()
@@ -180,7 +179,7 @@ class LoginActivity : AppCompatActivity() {
             } catch (e:Exception) {
                 Log.d("LoginActivity", e.message)
             }
-        return true
+        return false
     }
 
     private fun crearPreferenciasCompartidasLaunch(empleadoVerificado: Boolean) = CoroutineScope(Dispatchers.IO).launch {
