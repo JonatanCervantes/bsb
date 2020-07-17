@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0D3900</color>
-    <color name="colorPrimaryDark">#283325</color>
-    <color name="colorPrimaryLight">#37632A</color>
-    <color name="colorAccent">#B4BCBB</color>
+    <color name="colorPrimary">#222121</color>
+    <color name="colorPrimaryDark">#111211</color>
+    <color name="colorPrimaryLight">#323332</color>
+    <color name="colorAccent">#959898</color>
 
 
     <color name="fullWhite">#ffffff</color>
+    <color name="fullWhiteAlpha">#80ffffff</color>
     <color name="dustyWhite">#F0F3EFEF</color>
     <color name="fullBlack">#000000</color>
     <color name="dustyBlack">#F0201F1F</color>
@@ -14,10 +15,15 @@
     <color name="colorPrimarioFAB">#03DAC5</color>
     <color name="colorSecundarioFAB">#A60E0E</color>
 
-    <color name="primaryBackground">#232526</color>
-    <color name="secondaryBackground">#414345</color>
+    <color name="primaryBackground">#151515</color>
+    <color name="middleBackground">#0B142C</color>
+    <color name="middleBackgroundEmpleados">#0E220F</color>
+    <color name="middleBackgroundServicios">#422F1C</color>
+    <color name="middleBackgroundCitas">#044741</color>
+    <color name="secondaryBackground">#151617</color>
     <color name="transparentBackground">#00FFFFFF</color>
 
+    <color name="textoBotones">#0B142C</color>
     <color name="citasDisponiblePrimary">#095007</color>
     <color name="citasDisponibleSecondary">#1C681A</color>
     <color name="citasOcupadoPrimary">#3E060E</color>

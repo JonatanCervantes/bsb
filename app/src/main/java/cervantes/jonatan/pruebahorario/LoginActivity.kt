@@ -24,11 +24,13 @@ import java.lang.Exception
 import kotlin.coroutines.CoroutineContext
 
 const val REQUEST_CODE_SIGN_IN = 999
+const val REQUEST_CODE_CANCELLED = 12501
 
 class LoginActivity : AppCompatActivity() {
 
     lateinit var auth: FirebaseAuth
     lateinit var account: GoogleSignInAccount
+
     private val usuariosCollectionRef = Firebase.firestore.collection("usuarios")
     private val clavesCollectionRef = Firebase.firestore.collection("claves")
     private var empleadoVerificado = false
@@ -93,11 +95,15 @@ class LoginActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == REQUEST_CODE_SIGN_IN) {
-            account  = GoogleSignIn.getSignedInAccountFromIntent(data).result!!
+            try {
+                account  = GoogleSignIn.getSignedInAccountFromIntent(data).result!!
 
-            account?.let {
-                crearPreferenciasCompartidasLaunch(empleadoVerificado)
-                googleAuthForFirebase(it)
+                account?.let {
+                    crearPreferenciasCompartidasLaunch(empleadoVerificado)
+                    googleAuthForFirebase(it)
+                }
+            } catch (e: Exception) {
+                Log.d("LoginActivity", e.message)
             }
         }
 

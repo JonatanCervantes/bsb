@@ -20,7 +20,6 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:text="Sign In"
-        android:background="@drawable/background_buttons"
         android:src="@drawable/ic_google"
         android:scaleType="fitCenter"
         android:layout_gravity="center"
@@ -32,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Soy un empleado"
-        android:textSize="20sp"
+        android:textSize="20dp"
         />
 
     <RelativeLayout
@@ -53,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ingresa la clave de empleado"
-                android:layout_margin="10dp"/>
+                android:layout_marginHorizontal="40dp"/>
 
             <Button
                 android:layout_width="wrap_content"

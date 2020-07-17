@@ -11,13 +11,27 @@
     <string name="menu_citas">Citas</string>
     <string name="menu_servicios">Servicios</string>
     <string name="menu_empleados">Empleados</string>
+
+
     <string name="cerrarSesion">Cerrar sesion</string>
+    <string name="buttonSi">Si</string>
+    <string name="buttonNo">No</string>
+    <string name="buttonAgregar">Agregar</string>
+    <string name="buttonCancelar">Cancelar</string>
+
+    <string name="tituloAgregarEmpleado">Detalles del empleado</string>
+    <string name="tituloEliminarEmpleado">Eliminar empleado</string>
+    <string name="tituloModificarEmpleado">Modificar empleado</string>
+    <string name="tituloAgregarServicio">Detalles del servicio</string>
+    <string name="tituloEliminarServicio">Eliminar servicio</string>
+    <string name="tituloAgregarCita">Detalles de la cita</string>
+    <string name="tituloEliminarCita">Cancelar cita</string>
 
     <string name="home_second">Home Second</string>
-
     <string name="disponible">Hora Disponible</string>
-
     <string name="web_client_id">1044259338690-f8pf174ojakh8q1t7ipmaurqaau2l3ii.apps.googleusercontent.com</string>
+    <string name="preference_file_key">com.cervantes.jonatan.pruebahorario.ROL_USUARIO</string>
+    <string name="rol_usuario">rol</string>
 
 
     <!-- Strings para los horarios -->
@@ -56,9 +70,5 @@
         <item>Servicio 2</item>
         <item>Servicio 3</item>
     </string-array>
-
-    <string name="preference_file_key">com.cervantes.jonatan.pruebahorario.ROL_USUARIO</string>
-    <string name="rol_usuario">rol</string>
-
 
 </resources>

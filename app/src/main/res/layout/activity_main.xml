@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@drawable/background_citas_default"
+    android:background="@drawable/background_main_theme"
     tools:openDrawer="start">
 
     <include
@@ -22,6 +22,6 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer"
-        android:background="@drawable/background_citas_default"/>
+        android:background="@drawable/background_main_theme"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

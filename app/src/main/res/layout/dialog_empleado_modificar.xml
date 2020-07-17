@@ -1,75 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="600dp"
-    android:orientation="vertical"
-    android:padding="15dp">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_tituloModificarEmpleado"
-        android:text="MODIFICAR EMPLEADO"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_margin="10dp"
-        android:textSize="20sp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_avisoModificarEmpleado"
-        android:layout_gravity="center"
-        android:gravity="fill"
-        android:text="¿Está seguro que quiere modificar el empleado?"
-        android:layout_margin="10dp"/>
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RadioButton
-            android:id="@+id/rb_disponible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Disponible"
-            />
-        <RadioButton
-            android:id="@+id/rb_ocupado"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ocupado"
-            />
-        <RadioButton
-            android:id="@+id/rb_fueraDeTurno"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fuera de turno"
-            />
-
-    </RadioGroup>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/layoutsMargin"
+    android:background="@drawable/background_empleados_dialog"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
+        android:orientation="vertical"
+        android:padding="@dimen/layoutsPadding"
+        >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_noModificarEmpleado"
-            android:text="NO"
+            android:id="@+id/tv_tituloModificarEmpleado"
+            android:text="@string/tituloModificarEmpleado"
             android:gravity="center"
-            android:layout_weight="1"
-            />
-
+            android:layout_margin="@dimen/layoutsMargin"
+            android:textSize="@dimen/titlesTextSize"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_siModificarEmpleado"
-            android:text="SI"
-            android:gravity="center"
-            android:layout_weight="1"
-            />
+            android:id="@+id/tv_avisoModificarEmpleado"
+            android:layout_gravity="center"
+            android:textSize="@dimen/regularDialogTextSize"
+            android:text="¿Está seguro que quiere modificar el empleado?"
+            android:layout_margin="@dimen/layoutsMargin"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rb_disponible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Disponible"
+                />
+            <RadioButton
+                android:id="@+id/rb_ocupado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ocupado"
+                />
+            <RadioButton
+                android:id="@+id/rb_fueraDeTurno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fuera de turno"
+                />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/layoutsMargin">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_noModificarEmpleado"
+                android:text="@string/buttonNo"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_siModificarEmpleado"
+                android:text="@string/buttonSi"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

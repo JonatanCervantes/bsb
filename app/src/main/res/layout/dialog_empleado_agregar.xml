@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/layoutsMargin"
+    android:background="@drawable/background_empleados_dialog"
    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/layoutsPadding"
+        >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv_tituloAgregarEmpleado"
-            android:text="Detalles del Empleado"
-            android:layout_gravity="center"
+            android:text="@string/tituloAgregarEmpleado"
             android:gravity="center"
-            android:layout_margin="10dp"
-            android:textSize="24sp"/>
+            android:layout_margin="@dimen/layoutsMargin"
+            android:textSize="@dimen/titlesTextSize"/>
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="fitCenter"
+            android:layout_width="@dimen/imageViewDialogWidth"
+            android:layout_height="@dimen/imageViewDialogHeight"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
             android:src="@mipmap/ic_launcher"
             android:layout_gravity="center"
             android:id="@+id/iv_imagenEmpleado"
@@ -32,8 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre del empleado"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="5dp"
+            android:layout_marginHorizontal="@dimen/layoutsMargin"
+            android:layout_marginVertical="@dimen/verticalMarginEditText"
             android:id="@+id/et_nombreEmpleado"
             android:inputType="text"
             />
@@ -41,8 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Correo: ejemplo@gmail.com)"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="5dp"
+            android:layout_marginHorizontal="@dimen/layoutsMargin"
+            android:layout_marginVertical="@dimen/verticalMarginEditText"
             android:id="@+id/et_emailEmpleado"
             android:inputType="text"
             />
@@ -51,8 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Horario: (Ej. LMV 12-7PM)"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="5dp"
+            android:layout_marginHorizontal="@dimen/layoutsMargin"
+            android:layout_marginVertical="@dimen/verticalMarginEditText"
             android:id="@+id/et_horarioEmpleado"
             android:inputType="text"
             />
@@ -62,24 +66,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="10dp">
+            android:layout_margin="@dimen/layoutsMargin">
 
-            <TextView
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_cancelarEmpleado"
-                android:text="CANCEL"
-                android:gravity="center"
+                android:text="@string/buttonCancelar"
                 android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
                 />
 
-            <TextView
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_agregarEmpleado"
-                android:text="AGREGAR"
-                android:gravity="center"
+                android:text="@string/buttonAgregar"
                 android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
                 />
 
         </LinearLayout>

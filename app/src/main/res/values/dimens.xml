@@ -5,4 +5,19 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="layoutsMargin">10dp</dimen>
+    <dimen name="layoutsPadding">5dp</dimen>
+    <dimen name="verticalMarginEditText">5dp</dimen>
+    <dimen name="horizontalMarginButtons">5dp</dimen>
+
+    <dimen name="titlesTextSize">24sp</dimen>
+    <dimen name="subtitleTextSize">20sp</dimen>
+    <dimen name="regularDialogTextSize">16sp</dimen>
+
+    <dimen name="imageViewDialogWidth">100dp</dimen>
+    <dimen name="imageViewDialogHeight">100dp</dimen>
+
+
+
 </resources>

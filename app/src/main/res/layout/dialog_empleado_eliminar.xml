@@ -1,51 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="600dp"
-    android:orientation="vertical"
-    android:padding="15dp">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_tituloEliminarEmpleado"
-        android:text="ELIMINAR EMPLEADO"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_margin="10dp"
-        android:textSize="20sp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_avisoEliminacionEmpleado"
-        android:layout_gravity="center"
-        android:gravity="fill"
-        android:text="¿Está seguro que quiere eliminar el empleado?"
-        android:layout_margin="10dp"/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/layoutsMargin"
+    android:background="@drawable/background_empleados_dialog">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
+        android:orientation="vertical"
+        android:padding="@dimen/layoutsPadding"
+        >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_noEmpleado"
-            android:text="NO"
+            android:id="@+id/tv_tituloEliminarEmpleado"
+            android:text="@string/tituloEliminarEmpleado"
             android:gravity="center"
-            android:layout_weight="1"
-            />
-
+            android:layout_margin="@dimen/layoutsMargin"
+            android:textSize="@dimen/titlesTextSize"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_siEmpleado"
-            android:text="SI"
-            android:gravity="center"
-            android:layout_weight="1"
-            />
+            android:id="@+id/tv_avisoEliminacionEmpleado"
+            android:text="¿Está seguro que quiere eliminar el empleado?"
+            android:textSize="@dimen/regularDialogTextSize"
+            android:layout_margin="@dimen/layoutsMargin"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/layoutsMargin">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_noEmpleado"
+                android:text="@string/buttonNo"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_siEmpleado"
+                android:text="@string/buttonSi"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

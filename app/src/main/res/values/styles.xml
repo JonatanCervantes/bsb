@@ -1,5 +1,29 @@
 <resources>
 
+    <style name="button" parent="Widget.AppCompat.Button">
+        <item name="background">@drawable/background_buttons</item>
+        <item name="android:background">@drawable/background_buttons</item>
+        <item name="backgroundTint">@color/fullWhite</item>
+        <item name="android:textColor">@color/textoBotones</item>
+        <item name="textAllCaps">false</item>
+
+
+    </style>
+
+    <style name="imageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">@drawable/background_buttons</item>
+        <item name="background">@drawable/background_buttons</item>
+        <item name="backgroundTint">@color/fullWhite</item>
+    </style>
+
+    <style name="editText" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/dustyWhite</item>
+        <item name="android:textColorHint">@color/dustyWhite</item>
+    </style>
+
+    <style name="checkBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textColor">@color/dustyWhite</item>
+    </style>
 
     <style name="spinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
         <item name="android:textColor">@color/dustyWhite</item>
@@ -13,9 +37,6 @@
 
     </style>
 
-    <style name="imageButton" parent="Widget.AppCompat.ImageButton">
-        <item name="tint">@color/dustyWhite</item>
-    </style>
 
     <style name="navDrawer" parent="Widget.Design.NavigationView">
         <item name="itemTextColor">@color/dustyWhite</item>
@@ -35,12 +56,16 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@drawable/background_citas_default</item>
+
         <item name="android:textViewStyle">@style/textViewDialog</item>
-        <item name="android:textColorSecondary">@color/dustyWhite</item>
+        <item name="android:buttonStyle">@style/button</item>
+        <item name="editTextStyle">@style/editText</item>
+
+        <item name="android:windowBackground">@drawable/background_citas_default</item>
 
         <item name="android:spinnerDropDownItemStyle">@style/spinnerDropDownItem</item>
         <item name="android:spinnerItemStyle">@style/spinnerItem</item>
+        <item name="android:textColorSecondary">@color/dustyWhite</item>
 
     </style>
 
@@ -53,14 +78,22 @@
 
     </style>
 
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="navigationViewStyle">@style/navDrawer</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
 
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="background">@drawable/background_main_theme</item>
+
+
+    </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
@@ -69,15 +102,20 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+
         <item name="fontFamily">@font/gravity_regular</item>
+        <item name="android:textColorSecondary">@color/dustyWhite</item>
         <item name="android:textColor">@color/dustyWhite</item>
+
         <item name="android:dialogTheme">@style/fragmentDialog</item>
         <item name="navigationViewStyle">@style/navDrawer</item>
-        <item name="android:textColorSecondary">@color/dustyWhite</item>
-        <!--
+        <item name="background">@drawable/background_main_theme</item>
+        <item name="editTextStyle">@style/editText</item>
+        <item name="checkboxStyle">@style/checkBox</item>
+        <item name="android:buttonStyle">@style/button</item>
         <item name="imageButtonStyle">@style/imageButton</item>
-        -->
-
 
     </style>
 

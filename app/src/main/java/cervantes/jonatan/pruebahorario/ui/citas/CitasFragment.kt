@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_citas.*
 import cervantes.jonatan.pruebahorario.utilidades.CitaAdapter
 import cervantes.jonatan.pruebahorario.utilidades.CitaRV
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
@@ -37,12 +38,12 @@ class CitasFragment : Fragment() {
 
     private var listaCitas:TreeMap<Int, Cita> = TreeMap<Int, Cita>()
     private var listaIdDocumentos:TreeMap<Int, String> = TreeMap<Int, String>()
-    private var adapter: CitaAdapter?= null
+    private lateinit var adapter: CitaAdapter
 
     private var fechaQueryActual: Calendar?= null
     private var fechaQueryFutura: Calendar?= null
     companion object {
-        var fechaSeleccionada: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT-7"))
+        var fechaSeleccionada: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT-7") )
         var adminFragmento: FragmentManager?= null
 
         public fun inicializarFechas() {
@@ -52,8 +53,6 @@ class CitasFragment : Fragment() {
             fechaSeleccionada.set(Calendar.MILLISECOND, 0)
         }
     }
-
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         citasViewModel =
@@ -73,17 +72,13 @@ class CitasFragment : Fragment() {
         inicializarFechas()
         ajustarFechasQuerys()
 
-        var job2 = CoroutineScope(Dispatchers.IO).launch {
-            Log.d("CitasFragment", "corutina2 - THREAD: ${Thread.currentThread().name}")
-            adapter = CitaAdapter(llenarListaRecyclerView())
-            subscribeToRealtimeUpdates()
-            Log.d("CitasFragment", "Fin de la corutina 2")
-        }
+
+        var prelista: Deferred<ArrayList<CitaRV>> = llenarListaRecyclerViewAsync()
+        val job2 = subscribeToRealtimeUpdatesLaunch()
 
         runBlocking {
+            adapter = CitaAdapter(prelista.await())
             job2.join()
-            Log.d("CitasFragment", "Continua el main thread")
-            Log.d("CitasFragment", "runBlocking1 - THREAD: ${Thread.currentThread().name}")
         }
 
         rv_citas.adapter = adapter
@@ -99,53 +94,66 @@ class CitasFragment : Fragment() {
         fechaQueryFutura!!.add(Calendar.DAY_OF_YEAR, 1)
     }
 
+    private fun subscribeToRealtimeUpdatesLaunch() = CoroutineScope(Dispatchers.IO).launch {
+        subscribeToRealtimeUpdates()
+    }
+
     private fun subscribeToRealtimeUpdates(){
-        citaCollectionRef.whereGreaterThanOrEqualTo("fecha", Timestamp(fechaQueryActual!!.time))
-            .whereLessThan("fecha", Timestamp(fechaQueryFutura!!.time))
-            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-
-                firebaseFirestoreException?.let {
-                    Toast.makeText(view!!.context, it.message, Toast.LENGTH_LONG).show()
-                    return@addSnapshotListener
-                }
-
+        citaCollectionRef.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 var job = CoroutineScope(Dispatchers.IO).launch {
-                    listaCitas.clear()
-                    listaIdDocumentos.clear()
-                    var index = 0
-                    Log.d("CitasFragment", "RTU - THREAD: ${Thread.currentThread().name}")
-                    querySnapshot?.let {
-                        for (document in it) {
-                            Log.d("CitasFragment", document.toString())
-                            var cita = document.toObject<Cita>()
 
-                            listaCitas.put(index, cita)
-                            listaIdDocumentos.put(index, document.id)
-                            index++
-                            //listaCitas.add(cita)
-                        }
-                        withContext(Dispatchers.Main) {
-                            adapter!!.citasRv = llenarListaRecyclerView()
-                            adapter!!.notifyDataSetChanged()
-                        }
+                    firebaseFirestoreException?.let {
+                        Toast.makeText(view!!.context, it.message, Toast.LENGTH_LONG).show()
+                        return@launch
                     }
+
+                    if(activity != null) {
+                        solicitarCitasManualmente()
+                    }
+
                 }
+            }
+    }
+
+    private fun solicitarCitasManualmente() = CoroutineScope(Dispatchers.IO).launch {
+        try {
+            listaCitas.clear()
+            listaIdDocumentos.clear()
+            val querySnapshot = citaCollectionRef.whereGreaterThanOrEqualTo("fecha", Timestamp(fechaQueryActual!!.time))
+                .whereLessThan("fecha", Timestamp(fechaQueryFutura!!.time)).get().await()
+
+            var index = 0
+            for (document in querySnapshot.documents) {
+                Log.d("CitasFragment", document.toString())
+                var cita = document.toObject<Cita>()
+                if (cita != null) {
+                    listaCitas.put(index, cita)
+                    listaIdDocumentos.put(index, document.id)
+                    index++
+                }
+            }
+            withContext(Dispatchers.Main) {
+                adapter?.citasRv = llenarListaRecyclerView()
+                adapter?.notifyDataSetChanged()
+            }
+        } catch(e: Exception) {
+            withContext(Dispatchers.Main) {
+                Toast.makeText(this@CitasFragment.context, e.message, Toast.LENGTH_LONG).show()
+            }
         }
     }
 
     //EMPIEZA EL CAMBIADEROoooo
     private fun llenarListaRecyclerViewAsync() = CoroutineScope(Dispatchers.Default).async {
-
+        llenarListaRecyclerView()
     }
 
     private suspend fun llenarListaRecyclerView(): ArrayList<CitaRV> {
 
-        var horarios: Array<String> = view!!.resources.getStringArray(R.array.horarios)
+        var horarios: Array<String> = resources.getStringArray(R.array.horarios)
         var citaRvList = ArrayList<CitaRV>()
 
         var fechaCalendar = Calendar.getInstance(TimeZone.getTimeZone("GMT-7"))
-
-        Log.d("CitasFragment", "tamanio de las citas"+listaCitas.size.toString())
 
         for (i in horarios.indices) {
             var citaRv = CitaRV(horarios[i], resources.getString(R.string.disponible), "")
@@ -209,34 +217,7 @@ class CitasFragment : Fragment() {
         }
     }
 
-    private fun solicitarCitasManualmente() = CoroutineScope(Dispatchers.IO).launch {
-        try {
-            listaCitas.clear()
-            listaIdDocumentos.clear()
-            val querySnapshot = citaCollectionRef.whereGreaterThanOrEqualTo("fecha", Timestamp(fechaQueryActual!!.time))
-                .whereLessThan("fecha", Timestamp(fechaQueryFutura!!.time)).get().await()
 
-            Log.d("CitasFragment", "sol citas manual - THREAD: ${Thread.currentThread().name}")
-            var index = 0
-            for (document in querySnapshot.documents) {
-                Log.d("CitasFragment", document.toString())
-                var cita = document.toObject<Cita>()
-                if (cita != null) {
-                    listaCitas.put(index, cita)
-                    listaIdDocumentos.put(index, document.id)
-                    index++
-                }
-            }
-            withContext(Dispatchers.Main) {
-                adapter!!.citasRv = llenarListaRecyclerView()
-                adapter!!.notifyDataSetChanged()
-            }
-        } catch(e: Exception) {
-            withContext(Dispatchers.Main) {
-                Toast.makeText(this@CitasFragment.context, e.message, Toast.LENGTH_LONG).show()
-            }
-        }
-    }
 
 
 }

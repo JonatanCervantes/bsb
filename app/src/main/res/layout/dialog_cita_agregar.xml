@@ -1,79 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="600dp"
-    android:orientation="vertical"
-    android:padding="15dp">
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_detallesCita"
-        android:text="DETALLES DE LA CITA"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_margin="10dp"
-        android:textSize="20sp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_fechaCita"
-        android:layout_gravity="center"
-        android:gravity="fill"
-        android:text="FECHA DE LA CITA"
-        android:layout_margin="10dp"/>
-
-    <Spinner
-        android:id="@+id/spinner_empleados"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/arreglo_empleados"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        style="@style/spinnerItem"
-        />
-
-    <Spinner
-        android:id="@+id/spinner_servicios"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/arreglo_servicios"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        style="@style/spinnerDropDownItem"
-        />
-
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/layoutsMargin"
+    android:background="@drawable/background_citas_dialog">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
+        android:orientation="vertical"
+        android:padding="@dimen/layoutsPadding">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_cancel"
-            android:text="CANCEL"
+            android:id="@+id/tv_detallesCita"
+            android:text="@string/tituloAgregarCita"
             android:gravity="center"
-            android:layout_weight="1"
-            />
-
+            android:layout_margin="@dimen/layoutsMargin"
+            android:textSize="@dimen/titlesTextSize"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_ok"
-            android:text="OK"
-            android:gravity="center"
-            android:layout_weight="1"
+            android:id="@+id/tv_fechaCita"
+            android:text="Fecha de la cita: "
+            android:layout_margin="@dimen/layoutsMargin"
+            android:textSize="@dimen/subtitleTextSize"
             />
 
+        <Spinner
+            android:id="@+id/spinner_empleados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/arreglo_empleados"
+            android:layout_margin="@dimen/layoutsMargin"
+            />
+
+        <Spinner
+            android:id="@+id/spinner_servicios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/arreglo_servicios"
+            android:layout_margin="@dimen/layoutsMargin"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/layoutsMargin">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_cancel"
+                android:text="@string/buttonCancelar"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_ok"
+                android:text="@string/buttonAgregar"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-
-
-
-
-</LinearLayout>
+</RelativeLayout>

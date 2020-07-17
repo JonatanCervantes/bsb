@@ -1,51 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="600dp"
-    android:orientation="vertical"
-    android:padding="15dp">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_tituloEliminarServicio"
-        android:text="ELIMINAR SERVICIO"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_margin="10dp"
-        android:textSize="20sp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_avisoEliminacionServicio"
-        android:layout_gravity="center"
-        android:gravity="fill"
-        android:text="¿Está seguro que quiere eliminar el servicio?"
-        android:layout_margin="10dp"/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/layoutsMargin"
+    android:background="@drawable/background_servicios_dialog">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
+        android:orientation="vertical"
+        android:padding="@dimen/layoutsPadding">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_noServicio"
-            android:text="NO"
+            android:id="@+id/tv_tituloEliminarServicio"
+            android:text="@string/tituloEliminarServicio"
             android:gravity="center"
-            android:layout_weight="1"
-            />
-
+            android:layout_margin="@dimen/layoutsMargin"
+            android:textSize="@dimen/titlesTextSize"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_siServicio"
-            android:text="SI"
-            android:gravity="center"
-            android:layout_weight="1"
-            />
+            android:id="@+id/tv_avisoEliminacionServicio"
+            android:text="¿Está seguro que quiere eliminar el servicio?"
+            android:textSize="@dimen/regularDialogTextSize"
+            android:layout_margin="@dimen/layoutsMargin"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/layoutsMargin">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_noServicio"
+                android:text="@string/buttonNo"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_siServicio"
+                android:text="@string/buttonSi"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                />
+
+        </LinearLayout>
+
+
+
 
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
