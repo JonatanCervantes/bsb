@@ -65,9 +65,16 @@ class AgregarServicioDialog : DialogFragment() {
             val job = CoroutineScope(Dispatchers.IO).launch {
                 var duracion = et_duracionServicio.text.toString().toInt()
                 var precio = et_precioServicio.text.toString().toFloat()
-                var servicio =  Servicio(0, nombre, precio, duracion, imagen.await())
-                guardarServicio(servicio)
-                dialog!!.dismiss()
+
+                if(duracion == 0 || precio == 0.0f || nombre == "" || imagen == null) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(contextoActivityMain, "Porfavor llene todos los campos", Toast.LENGTH_LONG).show()
+                    }
+                } else {
+                    var servicio =  Servicio(0, nombre, precio, duracion, imagen.await())
+                    guardarServicio(servicio)
+                    dialog!!.dismiss()
+                }
             }
 
         }

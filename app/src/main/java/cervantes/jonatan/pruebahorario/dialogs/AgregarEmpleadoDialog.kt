@@ -69,14 +69,21 @@ class AgregarEmpleadoDialog : DialogFragment() {
                 var horario = et_horarioEmpleado.text.toString()
                 var email = et_emailEmpleado.text.toString()
 
-                var empleado =  Empleado(0,
-                    nombre,
-                    email,
-                    horario,
-                    Disponibilidades.FUERADETURNO.name,
-                    imagen.await())
-                guardarEmpleado(empleado)
-                dialog!!.dismiss()
+                if(nombre == "" || horario == "" || email == "" || imagen == null) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(contextoActivityMain, "Porfavor llene todos los campos", Toast.LENGTH_LONG).show()
+                    }
+                } else {
+                    var empleado =  Empleado(0,
+                        nombre,
+                        email,
+                        horario,
+                        Disponibilidades.FUERADETURNO.name,
+                        imagen.await())
+                    guardarEmpleado(empleado)
+                    dialog!!.dismiss()
+                }
+
             }
 
         }

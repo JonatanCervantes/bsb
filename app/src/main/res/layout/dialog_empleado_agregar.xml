@@ -48,7 +48,7 @@
             android:layout_marginHorizontal="@dimen/layoutsMargin"
             android:layout_marginVertical="@dimen/verticalMarginEditText"
             android:id="@+id/et_emailEmpleado"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             />
 
         <EditText
