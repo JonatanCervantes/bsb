@@ -1,3 +1,5 @@
 package cervantes.jonatan.pruebahorario.utilidades
 
-data class CitaRV(var hora:String, var cita:String, var idDocumento:String)
+import cervantes.jonatan.pruebahorario.entidades.Cita
+
+data class CitaRV(var hora:String, var listaCitas: ArrayList<Cita>, var listaIdDocumento: ArrayList<String>)

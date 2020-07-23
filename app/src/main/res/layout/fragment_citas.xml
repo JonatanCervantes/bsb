@@ -43,9 +43,15 @@
             android:layout_rowWeight="1"/>
     </GridLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rv_citas"/>
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rv_citas"/>
+    </ScrollView>
+
 
 </LinearLayout>

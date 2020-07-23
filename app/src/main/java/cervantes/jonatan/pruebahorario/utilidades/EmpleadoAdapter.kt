@@ -32,6 +32,7 @@ class EmpleadoAdapter(var empleadosRv: List<EmpleadoRV>) : RecyclerView.Adapter<
             tv_nombreEmpleado.text = empleadosRv[position].nombre
             tv_horarioEmpleado.text = "Horario: " + empleadosRv[position].horario
             tv_disponibilidadEmpleado.text = "El empleado se encuentra: " + empleadosRv[position].disponibilidad
+            icon_disponibilidad.setAnimation(empleadosRv[position].animacionDisponibilidad)
             Glide.with(this).load(empleadosRv[position].fotoPerfil).into(this.iv_imagenEmpleado)
         }
 

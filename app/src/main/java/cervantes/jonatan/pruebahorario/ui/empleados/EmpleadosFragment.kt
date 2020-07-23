@@ -62,7 +62,7 @@ class EmpleadosFragment : Fragment() {
 
         var job = CoroutineScope(Dispatchers.IO).launch {
             adapter = EmpleadoAdapter(llenarListaRecyclerView())
-            subscribeToRealtimeUpdates()
+            subscribeToRealtimeUpdatesLaunch()
         }
 
         runBlocking {
@@ -116,7 +116,11 @@ class EmpleadosFragment : Fragment() {
         }
     }
 
-    private fun subscribeToRealtimeUpdates(){
+    fun subscribeToRealtimeUpdatesLaunch() = CoroutineScope(Dispatchers.IO).launch {
+        subscribeToRealtimeUpdates()
+    }
+
+    private fun subscribeToRealtimeUpdates() {
         empleadosCollectionRef.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
             firebaseFirestoreException?.let {
                 Toast.makeText(view!!.context, it.message, Toast.LENGTH_LONG).show()
@@ -146,13 +150,15 @@ class EmpleadosFragment : Fragment() {
         var empleadoRvList = ArrayList<EmpleadoRV>()
 
         for (i in listaEmpleados.indices) {
-            var empleadoRv = EmpleadoRV("", "", "", listaIdDocumentos[i], "", "")
+            var empleadoRv = EmpleadoRV("", "", "", listaIdDocumentos[i], "", R.raw.mreddot,"")
             empleadoRv.nombre = listaEmpleados[i]!!.nombre
             empleadoRv.email = listaEmpleados[i]!!.email
             empleadoRv.fotoPerfil = listaEmpleados[i]!!.fotoPerfil
             empleadoRv.horario = listaEmpleados[i]!!.horario
             empleadoRv.disponibilidad = listaEmpleados[i]!!.disponibilidad
-
+            if(empleadoRv.disponibilidad == Disponibilidades.DISPONIBLE.name) {
+                empleadoRv.animacionDisponibilidad = R.raw.mpulsing
+            }
             empleadoRvList.add(empleadoRv)
         }
 

@@ -61,11 +61,15 @@
         <item name="android:buttonStyle">@style/button</item>
         <item name="editTextStyle">@style/editText</item>
 
-        <item name="android:windowBackground">@drawable/background_citas_default</item>
+        <item name="android:windowBackground">@color/transparentBackground</item>
 
+
+        <!--
+        <item name="android:windowBackground">@drawable/background_citas_default</item>
         <item name="android:spinnerDropDownItemStyle">@style/spinnerDropDownItem</item>
         <item name="android:spinnerItemStyle">@style/spinnerItem</item>
         <item name="android:textColorSecondary">@color/dustyWhite</item>
+              -->
 
     </style>
 
@@ -110,8 +114,8 @@
         <item name="android:textColor">@color/dustyWhite</item>
 
         <item name="android:dialogTheme">@style/fragmentDialog</item>
+
         <item name="navigationViewStyle">@style/navDrawer</item>
-        <item name="background">@drawable/background_main_theme</item>
         <item name="editTextStyle">@style/editText</item>
         <item name="checkboxStyle">@style/checkBox</item>
         <item name="android:buttonStyle">@style/button</item>

@@ -28,22 +28,44 @@
             android:textSize="@dimen/subtitleTextSize"
             />
 
-        <Spinner
-            android:id="@+id/spinner_empleados"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/arreglo_empleados"
+            android:id="@+id/tv_horaCita"
+            android:text="Hora: "
             android:layout_margin="@dimen/layoutsMargin"
+            android:textSize="@dimen/subtitleTextSize"
             />
 
-        <Spinner
-            android:id="@+id/spinner_servicios"
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/arreglo_servicios"
-            android:layout_margin="@dimen/layoutsMargin"
-            />
+            android:id="@+id/hscrollViewEmpleados"
+            >
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:id="@+id/ll_viewEmpleados"
+                />
+
+        </HorizontalScrollView>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/hscrollViewServicios"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:id="@+id/ll_viewServicios"
+                />
+
+        </HorizontalScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"

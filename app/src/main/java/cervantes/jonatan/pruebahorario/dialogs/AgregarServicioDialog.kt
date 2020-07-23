@@ -55,6 +55,8 @@ class AgregarServicioDialog : DialogFragment() {
         }
 
         tv_agregarServicio.setOnClickListener {
+            lateinit var loadingDialog: LoadingDialog
+
             var nombre = et_nombreServicio.text.toString()
 
             val imagen = CoroutineScope(Dispatchers.IO).async {
@@ -71,9 +73,23 @@ class AgregarServicioDialog : DialogFragment() {
                         Toast.makeText(contextoActivityMain, "Porfavor llene todos los campos", Toast.LENGTH_LONG).show()
                     }
                 } else {
-                    var servicio =  Servicio(0, nombre, precio, duracion, imagen.await())
-                    guardarServicio(servicio)
-                    dialog!!.dismiss()
+                    try {
+                        withTimeout(TIEMPO_TIMEOUT) {
+                            loadingDialog = LoadingDialog()
+                            loadingDialog.show(fragmentManager!!, "LoadingDialog")
+                            var servicio =  Servicio(0, nombre, precio, duracion, imagen.await())
+                            val trabajoGuardarServicio = guardarServicio(servicio)
+                            trabajoGuardarServicio.invokeOnCompletion {
+                                loadingDialog.changeAnimationLaunch(true)
+                                dialog!!.dismiss()
+                            }
+                        }
+                    } catch (e: TimeoutCancellationException ) {
+                        e.printStackTrace()
+                        loadingDialog.changeAnimationLaunch(false)
+                        dialog?.dismiss()
+                    }
+
                 }
             }
 

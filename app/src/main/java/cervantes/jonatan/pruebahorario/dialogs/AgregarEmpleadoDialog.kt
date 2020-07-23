@@ -26,8 +26,10 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
 private const val REQUEST_CODE_IMAGE_PICK = 0
+const val TIEMPO_TIMEOUT = 15000L
 
 class AgregarEmpleadoDialog : DialogFragment() {
+
 
     private val empleadosCollectionRef = Firebase.firestore.collection("empleados")
     var contextoActivityMain: Context?= null
@@ -41,7 +43,6 @@ class AgregarEmpleadoDialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         contextoActivityMain = view.context
 
         iv_imagenEmpleado.setOnClickListener {
@@ -58,6 +59,7 @@ class AgregarEmpleadoDialog : DialogFragment() {
         }
 
         tv_agregarEmpleado.setOnClickListener {
+            lateinit var loadingDialog: LoadingDialog
             var nombre = et_nombreEmpleado.text.toString()
 
             val imagen = CoroutineScope(Dispatchers.IO).async {
@@ -74,16 +76,28 @@ class AgregarEmpleadoDialog : DialogFragment() {
                         Toast.makeText(contextoActivityMain, "Porfavor llene todos los campos", Toast.LENGTH_LONG).show()
                     }
                 } else {
-                    var empleado =  Empleado(0,
-                        nombre,
-                        email,
-                        horario,
-                        Disponibilidades.FUERADETURNO.name,
-                        imagen.await())
-                    guardarEmpleado(empleado)
-                    dialog!!.dismiss()
+                    try {
+                        withTimeout(TIEMPO_TIMEOUT) {
+                            loadingDialog = LoadingDialog()
+                            loadingDialog.show(fragmentManager!!, "LoadingDialog")
+                            var empleado =  Empleado(0,
+                                nombre,
+                                email,
+                                horario,
+                                Disponibilidades.FUERADETURNO.name,
+                                imagen.await())
+                            val trabajoGuardarEmpleado = guardarEmpleado(empleado)
+                            trabajoGuardarEmpleado.invokeOnCompletion {
+                                loadingDialog.changeAnimationLaunch(true)
+                                dialog!!.dismiss()
+                            }
+                        }
+                    } catch (e: TimeoutCancellationException ) {
+                        e.printStackTrace()
+                        loadingDialog.changeAnimationLaunch(false)
+                        dialog?.dismiss()
+                    }
                 }
-
             }
 
         }

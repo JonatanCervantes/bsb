@@ -26,6 +26,8 @@
     <color name="textoBotones">#0B142C</color>
     <color name="citasDisponiblePrimary">#095007</color>
     <color name="citasDisponibleSecondary">#1C681A</color>
+    <color name="citasNoDisponiblePrimary">#474547</color>
+    <color name="citasNoDisponibleSecondary">#A3A2A3</color>
     <color name="citasOcupadoPrimary">#3E060E</color>
     <color name="citasOcupadoSecondary">#450A0A</color>
 

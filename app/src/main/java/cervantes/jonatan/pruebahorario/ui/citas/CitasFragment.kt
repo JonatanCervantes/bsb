@@ -14,13 +14,14 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import cervantes.jonatan.pruebahorario.R
 import cervantes.jonatan.pruebahorario.entidades.Cita
+import cervantes.jonatan.pruebahorario.utilidades.CitaAdapter
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_citas.*
-import cervantes.jonatan.pruebahorario.utilidades.CitaAdapter
 import cervantes.jonatan.pruebahorario.utilidades.CitaRV
+import cervantes.jonatan.pruebahorario.utilidades.ListaAdapter
+import cervantes.jonatan.pruebahorario.utilidades.TablaAdapter
 import com.google.firebase.Timestamp
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
@@ -38,7 +39,7 @@ class CitasFragment : Fragment() {
 
     private var listaCitas:TreeMap<Int, Cita> = TreeMap<Int, Cita>()
     private var listaIdDocumentos:TreeMap<Int, String> = TreeMap<Int, String>()
-    private lateinit var adapter: CitaAdapter
+        private lateinit var tablaAdapter: TablaAdapter
 
     private var fechaQueryActual: Calendar?= null
     private var fechaQueryFutura: Calendar?= null
@@ -46,7 +47,7 @@ class CitasFragment : Fragment() {
         var fechaSeleccionada: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT-7") )
         var adminFragmento: FragmentManager?= null
 
-        public fun inicializarFechas() {
+        fun inicializarFechas() {
             fechaSeleccionada.set(Calendar.HOUR_OF_DAY, 0)
             fechaSeleccionada.set(Calendar.MINUTE, 0)
             fechaSeleccionada.set(Calendar.SECOND, 1)
@@ -77,15 +78,13 @@ class CitasFragment : Fragment() {
         val job2 = subscribeToRealtimeUpdatesLaunch()
 
         runBlocking {
-            adapter = CitaAdapter(prelista.await())
+            tablaAdapter = TablaAdapter(prelista.await(), view)
             job2.join()
         }
 
-        rv_citas.adapter = adapter
-        rv_citas.layoutManager = LinearLayoutManager(view.context)
+        tablaAdapter.inflarVista()
 
-        configurarTvFechaActual(view)
-        configurarBotones(view)
+        inicializarBarraSuperiorLaunch(view)
     }
 
     private fun ajustarFechasQuerys() {
@@ -131,15 +130,19 @@ class CitasFragment : Fragment() {
                     listaIdDocumentos.put(index, document.id)
                     index++
                 }
+                Log.d("CitasFragment", "citas encontradas: " + listaCitas.size)
             }
             withContext(Dispatchers.Main) {
-                adapter?.citasRv = llenarListaRecyclerView()
-                adapter?.notifyDataSetChanged()
+                tablaAdapter = TablaAdapter(llenarListaRecyclerViewAsync().await(), view!!)
+                tablaAdapter.inflarVista()
             }
         } catch(e: Exception) {
             withContext(Dispatchers.Main) {
                 Toast.makeText(this@CitasFragment.context, e.message, Toast.LENGTH_LONG).show()
             }
+
+            e.printStackTrace()
+            Log.d("CitasFragment", e.message)
         }
     }
 
@@ -155,30 +158,33 @@ class CitasFragment : Fragment() {
 
         var fechaCalendar = Calendar.getInstance(TimeZone.getTimeZone("GMT-7"))
 
+
         for (i in horarios.indices) {
-            var citaRv = CitaRV(horarios[i], resources.getString(R.string.disponible), "")
+            var listaCitasEnviar: ArrayList<Cita> = ArrayList()
+            var listaIdDocumentoEnviar: ArrayList<String> = ArrayList()
+
             for (j in listaCitas.keys) {
-                var horaYMinuto:String = ""
                 fechaCalendar.time = (listaCitas[j]!!.fecha.toDate())
-                horaYMinuto+=(fechaCalendar.get(Calendar.HOUR_OF_DAY).toString())
-                horaYMinuto+=(":")
-                if(fechaCalendar.get(Calendar.MINUTE).toString().length == 1) {
-                    horaYMinuto+="0"+(fechaCalendar.get(Calendar.MINUTE).toString())
-                } else {
-                    horaYMinuto+=(fechaCalendar.get(Calendar.MINUTE).toString())
-                }
+                var horaYMinuto =(fechaCalendar.get(Calendar.HOUR_OF_DAY).toString())
 
                 Log.d("CitasFragment", "Hora1: "+horarios[i]  + "Hora2: "+ horaYMinuto)
 
-                if(horarios[i].equals(horaYMinuto)) {
-                    citaRv.cita = "Apartado: " + listaCitas[j]!!.cliente.nombre
-                    citaRv.idDocumento = listaIdDocumentos[j]!!
-                    break
+                if(horarios[i] == (horaYMinuto)) {
+                    listaCitasEnviar.add(listaCitas[j]!!)
+                    listaIdDocumentoEnviar.add(listaIdDocumentos[j]!!)
                 }
             }
+
+            var citaRv = CitaRV(hora = horarios[i], listaCitas = listaCitasEnviar, listaIdDocumento = listaIdDocumentoEnviar)
             citaRvList.add(citaRv)
         }
+
         return citaRvList
+    }
+
+    private fun inicializarBarraSuperiorLaunch(view: View) = CoroutineScope(Dispatchers.Main).launch {
+        configurarTvFechaActual(view)
+        configurarBotones(view)
     }
 
     private fun configurarTvFechaActual(view:View) {

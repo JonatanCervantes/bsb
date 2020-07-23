@@ -1,6 +1,5 @@
 package cervantes.jonatan.pruebahorario.dialogs
 
-import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -13,16 +12,19 @@ import androidx.fragment.app.DialogFragment
 import cervantes.jonatan.pruebahorario.R
 import cervantes.jonatan.pruebahorario.entidades.*
 import cervantes.jonatan.pruebahorario.ui.citas.CitasFragment
+import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.dialog_cita_agregar.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.mini_empleado_servicio_view.view.*
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AgregarCitaDialog : DialogFragment() {
 
@@ -32,6 +34,14 @@ class AgregarCitaDialog : DialogFragment() {
     private lateinit var tv_fechaCita: TextView
 
     private val citaCollectionRef= Firebase.firestore.collection("citas")
+    private val empleadosCollectionRef = Firebase.firestore.collection("empleados")
+    private var listaEmpleados:ArrayList<Empleado> = ArrayList<Empleado>()
+    private var listaIdDocumentosEmpleados:ArrayList<String> = ArrayList<String>()
+    private val serviciosCollectionRef = Firebase.firestore.collection("servicios")
+    private var listaServicios:ArrayList<Servicio> = ArrayList<Servicio>()
+    private var listaIdDocumentosServicios:ArrayList<String> = ArrayList<String>()
+    private val usuariosCollectionRef = Firebase.firestore.collection("usuarios")
+    lateinit var auth: FirebaseAuth
 
     var contextoActivityMain: Context?= null
 
@@ -51,38 +61,63 @@ class AgregarCitaDialog : DialogFragment() {
 
         contextoActivityMain = view.context
 
+        auth = FirebaseAuth.getInstance()
+
+        obtenerUsuarioLaunch()
+
         tv_cancel.setOnClickListener {
             CitasFragment.inicializarFechas()
             dialog!!.dismiss()
         }
 
         tv_ok.setOnClickListener {
+            lateinit var loadingDialog:LoadingDialog
+            val job = CoroutineScope(Dispatchers.IO).launch {
+                withTimeout(TIEMPO_TIMEOUT) {
+                    try {
+                        var idCita = 7
+                        var fecha = Timestamp(CitasFragment.fechaSeleccionada.time)
 
-            val spinnerServicio = view.findViewById<Spinner>(R.id.spinner_servicios)
-            val spinnerEmpleado = spinner_empleados
+                        var cliente = cliente
+                        var empleado = empleadoSeleccionado
+                        var servicio = servicioSeleccionado
 
-            var idServicio = spinnerServicio.selectedItemId.toInt()
-            var idEmpleado = spinnerEmpleado.selectedItemId.toInt()
-            var idCita = 7
-            var fecha = Timestamp(CitasFragment.fechaSeleccionada.time)
+                        if(cliente != null || empleado != null || servicio != null) {
+                            loadingDialog = LoadingDialog()
+                            loadingDialog.show(fragmentManager!!, "LoadingDialog")
+                            var cita:Cita = Cita(idCita, cliente, empleado!!, servicio!!, fecha)
 
-            var cliente = Usuario(idUsuario = "")
-            var empleado = Usuario(idUsuario = idEmpleado.toString())
-            var servicio = Servicio(idServicio)
+                            val trabajoGuardarCita = guardarCita(cita)
 
-            var cita:Cita = Cita(idCita, cliente, empleado, servicio, fecha)
+                            trabajoGuardarCita.invokeOnCompletion {
+                                loadingDialog.changeAnimationLaunch(true)
+                                CitasFragment.inicializarFechas()
+                                dialog?.dismiss()
+                            }
+                        } else {
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(contextoActivityMain, "Porfavor seleccione los detalles de la cita", Toast.LENGTH_LONG).show()
+                            }
+                        }
 
-            guardarCita(cita)
+                    } catch (e: TimeoutCancellationException) {
+                        e.printStackTrace()
+                        loadingDialog.changeAnimationLaunch(false)
+                        dialog?.dismiss()
+                    }
 
-            CitasFragment.inicializarFechas()
-
-            dialog!!.dismiss()
+                }
+            }
         }
-        tv_fechaCita.text = Editable.Factory.getInstance().newEditable(SimpleDateFormat("EEE dd/MM/yyyy")
-            .format(CitasFragment.fechaSeleccionada.time))
 
-        configurarSpinnerEmpleados(view)
-        configurarSpinnerServicios(view)
+        tv_fechaCita.text = "Fecha seleccionada: ".plus(Editable.Factory.getInstance().newEditable(SimpleDateFormat("EEE dd/MM/yyyy")
+            .format(CitasFragment.fechaSeleccionada.time)))
+        tv_horaCita.text = "Hora: " + CitasFragment.fechaSeleccionada.get(Calendar.HOUR_OF_DAY).toString() + ":" + CitasFragment.fechaSeleccionada.get(Calendar.MINUTE).toString()
+
+        //configurarSpinnerEmpleados(view)
+        //configurarSpinnerServicios(view)
+        subscribeToRealTimeupdatesEmpleadosLaunch()
+        subscribeToRealtimeUpdatesServiciosLaunch()
     }
 
     private fun guardarCita(cita: Cita)  = CoroutineScope(Dispatchers.IO).launch{
@@ -101,49 +136,131 @@ class AgregarCitaDialog : DialogFragment() {
         }
     }
 
-    fun configurarSpinnerEmpleados(view: View) {
-        val empleados = resources.getStringArray(R.array.arreglo_empleados)
+    fun subscribeToRealTimeupdatesEmpleadosLaunch() = CoroutineScope(Dispatchers.Main).launch {
+        subscribeToRealtimeEmpleadosUpdates()
+    }
 
-        val spinner = view.findViewById<Spinner>(R.id.spinner_empleados)
-        if (spinner != null) {
-            //val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, medicamentos)
-            val adapter = ArrayAdapter(view.context,
-                R.layout.spinner_item, empleados)
-            //adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
-            spinner.adapter = adapter
+    private fun subscribeToRealtimeEmpleadosUpdates() {
+        empleadosCollectionRef.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            firebaseFirestoreException?.let {
+                Toast.makeText(view!!.context, it.message, Toast.LENGTH_LONG).show()
+                return@addSnapshotListener
+            }
 
-            spinner.onItemSelectedListener = object :
-                AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-
-                }
-                override fun onNothingSelected(parent: AdapterView<*>) {
+            var job = CoroutineScope(Dispatchers.IO).launch {
+                listaEmpleados.clear()
+                listaIdDocumentosEmpleados.clear()
+                querySnapshot?.let {
+                    for (document in it) {
+                        var empleado = document.toObject<Empleado>()
+                        listaEmpleados.add(empleado)
+                        listaIdDocumentosEmpleados.add(document.id)
+                    }
+                    withContext(Dispatchers.Main) {
+                        inflarEmpleados()
+                    }
                 }
             }
         }
     }
 
-    fun configurarSpinnerServicios(view: View) {
-        val servicios = resources.getStringArray(R.array.arreglo_servicios)
+    private fun inflarEmpleados() {
+        for (i in listaEmpleados.indices) {
+            var vista = layoutInflater.inflate(R.layout.mini_empleado_servicio_view, null)
+            Glide.with(this).load(listaEmpleados[i].fotoPerfil).into(vista.iv_imagenEmpleadoServicio)
+            vista.tv_nombreEmpleadoServicio.text = listaEmpleados[i].nombre
+            vista.iv_imagenEmpleadoServicio.setOnClickListener {
+                seleccionarEmpleado(vista.iv_imagenEmpleadoServicio, listaEmpleados[i])
+            }
+            ll_viewEmpleados.addView(vista)
+        }
+    }
 
-        val spinner = view.findViewById<Spinner>(R.id.spinner_servicios)
-        if (spinner != null) {
-            //val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, medicamentos)
-            val adapter = ArrayAdapter(view.context,
-                R.layout.spinner_item, servicios)
-            //adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
-            spinner.adapter = adapter
+    private var empleadoSeleccionado: Empleado ?= null
+    private var imageViewSeleccionada: ImageView ?=null
 
-            spinner.onItemSelectedListener = object :
-                AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+    fun seleccionarEmpleado(imageView: ImageView, empleado:Empleado) {
+        imageViewSeleccionada?.alpha = 1.0f
 
-                }
-                override fun onNothingSelected(parent: AdapterView<*>) {
+        empleadoSeleccionado = empleado
+        imageViewSeleccionada = imageView
+        imageViewSeleccionada?.alpha = 0.4f
+    }
+
+    fun subscribeToRealtimeUpdatesServiciosLaunch() = CoroutineScope(Dispatchers.IO).launch {
+        subscribeToRealtimeServiciosUpdates()
+    }
+
+
+    private fun subscribeToRealtimeServiciosUpdates(){
+        serviciosCollectionRef.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            firebaseFirestoreException?.let {
+                Toast.makeText(view!!.context, it.message, Toast.LENGTH_LONG).show()
+                return@addSnapshotListener
+            }
+
+            var job = CoroutineScope(Dispatchers.IO).launch {
+                listaServicios.clear()
+                listaIdDocumentosServicios.clear()
+                querySnapshot?.let {
+                    for (document in it) {
+                        var servicio = document.toObject<Servicio>()
+                        listaServicios.add(servicio)
+                        listaIdDocumentosServicios.add(document.id)
+                    }
+                    withContext(Dispatchers.Main) {
+                        inflarServicios()
+                    }
                 }
             }
         }
     }
+
+
+    private fun inflarServicios() {
+        for (i in listaServicios.indices) {
+            var vista = layoutInflater.inflate(R.layout.mini_empleado_servicio_view, null)
+            Glide.with(this).load(listaServicios[i].imagen).into(vista.iv_imagenEmpleadoServicio)
+            vista.tv_nombreEmpleadoServicio.text = listaServicios[i].nombre
+            vista.iv_imagenEmpleadoServicio.setOnClickListener {
+                seleccionarServicio(vista.iv_imagenEmpleadoServicio, listaServicios[i])
+            }
+
+            ll_viewServicios.addView(vista)
+        }
+    }
+
+
+    private var servicioSeleccionado: Servicio ?= null
+    private var iamgeViewServicioSeleccionada: View ?= null
+
+    fun seleccionarServicio(imageView: ImageView, servicio:Servicio) {
+        iamgeViewServicioSeleccionada?.alpha = 1.0f
+
+        servicioSeleccionado = servicio
+        iamgeViewServicioSeleccionada = imageView
+        iamgeViewServicioSeleccionada?.alpha = 0.4f
+    }
+
+    private fun obtenerUsuarioLaunch() = CoroutineScope(Dispatchers.IO).async {
+        obtenerUsuario()
+    }
+
+    private lateinit var cliente:Usuario
+
+    private fun obtenerUsuario() {
+        val coincidencias = CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val querySnapshot = usuariosCollectionRef.whereEqualTo("idUsuario", auth.uid).get().await()
+                cliente = querySnapshot.documents[0].toObject<Usuario>()!!
+            } catch (e:Exception) {
+                Log.d("LoginActivity", e.message)
+            }
+        }
+
+    }
+
+
 
 
 

@@ -61,7 +61,7 @@ class ServiciosFragment : Fragment() {
 
         var job = CoroutineScope(Dispatchers.IO).launch {
             adapter = ServicioAdapter(llenarListaRecyclerView())
-            subscribeToRealtimeUpdates()
+            subscribeToRealtimeUpdatesLaunch()
         }
 
         runBlocking {
@@ -105,6 +105,10 @@ class ServiciosFragment : Fragment() {
             rl_adminServicios.isEnabled = true
             rl_adminServicios.isVisible = true
         }
+    }
+
+    fun subscribeToRealtimeUpdatesLaunch() = CoroutineScope(Dispatchers.IO).launch {
+        subscribeToRealtimeUpdates()
     }
 
 

@@ -27,6 +27,9 @@
     <string name="tituloAgregarCita">Detalles de la cita</string>
     <string name="tituloEliminarCita">Cancelar cita</string>
 
+
+    <string name="operacion_exitosa">Se realizó el registro con éxito</string>
+    <string name="operacion_fallida">Ocurrió un error. Porfavor inténtelo de nuevo más tarde</string>
     <string name="home_second">Home Second</string>
     <string name="disponible">Hora Disponible</string>
     <string name="web_client_id">1044259338690-f8pf174ojakh8q1t7ipmaurqaau2l3ii.apps.googleusercontent.com</string>
@@ -37,25 +40,28 @@
     <!-- Strings para los horarios -->
 
     <string-array name="horarios">
-        <item>11:00</item>
-        <item>11:30</item>
-        <item>12:00</item>
-        <item>12:30</item>
-        <item>13:00</item>
-        <item>13:30</item>
-        <item>14:00</item>
-        <item>14:30</item>
-        <item>15:00</item>
-        <item>15:30</item>
-        <item>16:00</item>
-        <item>16:30</item>
-        <item>17:00</item>
-        <item>17:30</item>
-        <item>18:00</item>
-        <item>18:30</item>
-        <item>19:00</item>
-
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
     </string-array>
+
+    <string-array name="horariosMinutos">
+        <item name="minutos1">00</item>
+        <item name="minutos2">10</item>
+        <item name="minutos3">20</item>
+        <item name="minutos4">30</item>
+        <item name="minutos5">40</item>
+        <item name="minutos6">50</item>
+    </string-array>
+
+
 
     <string-array name="arreglo_empleados">
         <item>Empleado</item>
