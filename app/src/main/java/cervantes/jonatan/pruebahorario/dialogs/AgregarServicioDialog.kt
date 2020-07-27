@@ -3,6 +3,8 @@ package cervantes.jonatan.pruebahorario.dialogs
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -56,19 +58,24 @@ class AgregarServicioDialog : DialogFragment() {
 
         tv_agregarServicio.setOnClickListener {
             lateinit var loadingDialog: LoadingDialog
+            var duracion = 0
+            var precio = 0.0f
 
             var nombre = et_nombreServicio.text.toString()
 
             val imagen = CoroutineScope(Dispatchers.IO).async {
-                Log.d("AgregarServicioDialog", "Entrando al upload image")
                 uploadImageToStorage("img_${nombre}")
             }
 
             val job = CoroutineScope(Dispatchers.IO).launch {
-                var duracion = et_duracionServicio.text.toString().toInt()
-                var precio = et_precioServicio.text.toString().toFloat()
+                try {
+                    duracion = et_duracionServicio.text.toString().toInt()
+                    precio = et_precioServicio.text.toString().toFloat()
+                } catch (e: Exception) {
+                    Log.d("AgregarServicioDialog", e.message)
+                }
 
-                if(duracion == 0 || precio == 0.0f || nombre == "" || imagen == null) {
+                if(duracion == 0 || precio == 0.0f || nombre == "" || imagen.await() == "") {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(contextoActivityMain, "Porfavor llene todos los campos", Toast.LENGTH_LONG).show()
                     }
@@ -107,24 +114,33 @@ class AgregarServicioDialog : DialogFragment() {
     }
 
     private suspend fun uploadImageToStorage(fileName: String) : String {
-        try {
-            curFile?.let {
-                imagesRef.child("images/$fileName").putFile(it).await()
-                Log.d("AgregarServicioDialog", "Se subio la imagen")
-            }
-            val urlImagen = imagesRef.child("images/$fileName").downloadUrl.await().toString()
+        if(isOnline(contextoActivityMain!!)) {
+            if(curFile != null) {
+                try {
+                    curFile?.let {
+                        imagesRef.child("images/$fileName").putFile(it).await()
+                        Log.d("AgregarServicioDialog", "Se subio la imagen")
+                    }
+                    val urlImagen = imagesRef.child("images/$fileName").downloadUrl.await().toString()
 
-            withContext(Dispatchers.Main) {
-                Toast.makeText(contextoActivityMain, "Se subio la imagen al storage y se obtuvo URL", Toast.LENGTH_LONG).show()
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(contextoActivityMain, "Se subio la imagen al storage y se obtuvo URL", Toast.LENGTH_LONG).show()
+                    }
+                    return urlImagen
+                } catch (e: Exception) {
+                    Log.d("AgregarServicioDialog", e.message)
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(contextoActivityMain, e.message, Toast.LENGTH_LONG).show()
+                    }
+                }
             }
-            return urlImagen
-        } catch (e: Exception) {
-            Log.d("AgregarServicioDialog", e.message)
+        } else {
             withContext(Dispatchers.Main) {
-                Toast.makeText(contextoActivityMain, e.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(contextoActivityMain, "Porfavor revise su conexion a internet", Toast.LENGTH_LONG).show()
             }
         }
-        return "noImageUrl"
+
+        return ""
     }
 
     private fun guardarServicio(servicio: Servicio)  = CoroutineScope(Dispatchers.IO).launch{
@@ -141,6 +157,28 @@ class AgregarServicioDialog : DialogFragment() {
                 Toast.makeText(contextoActivityMain, e.message, Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
     }
 
 

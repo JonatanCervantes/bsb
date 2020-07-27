@@ -114,12 +114,13 @@ class ServiciosFragment : Fragment() {
 
     private fun subscribeToRealtimeUpdates(){
         serviciosCollectionRef.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            var job = CoroutineScope(Dispatchers.IO).launch {
                 firebaseFirestoreException?.let {
                     Toast.makeText(view!!.context, it.message, Toast.LENGTH_LONG).show()
-                    return@addSnapshotListener
+                    return@launch
                 }
 
-                var job = CoroutineScope(Dispatchers.IO).launch {
+                if(activity != null) {
                     listaServicios.clear()
                     listaIdDocumentos.clear()
                     querySnapshot?.let {
@@ -134,7 +135,9 @@ class ServiciosFragment : Fragment() {
                         }
                     }
                 }
-            }
+
+            }//Termina el job
+        }
     }
 
     private suspend fun llenarListaRecyclerView(): ArrayList<ServicioRV> {

@@ -1,6 +1,8 @@
 package cervantes.jonatan.pruebahorario.dialogs
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -71,44 +73,51 @@ class AgregarCitaDialog : DialogFragment() {
         }
 
         tv_ok.setOnClickListener {
-            lateinit var loadingDialog:LoadingDialog
-            val job = CoroutineScope(Dispatchers.IO).launch {
-                withTimeout(TIEMPO_TIMEOUT) {
-                    try {
-                        var idCita = 7
-                        var fecha = Timestamp(CitasFragment.fechaSeleccionada.time)
+            if(isOnline(contextoActivityMain!!)) {
+                lateinit var loadingDialog:LoadingDialog
+                val job = CoroutineScope(Dispatchers.IO).launch {
+                    val timeout = withTimeout(15000) {
+                        try {
+                            var idCita = 7
+                            var fecha = Timestamp(CitasFragment.fechaSeleccionada.time)
 
-                        var cliente = cliente
-                        var empleado = empleadoSeleccionado
-                        var servicio = servicioSeleccionado
+                            var cliente = cliente
+                            var empleado = empleadoSeleccionado
+                            var servicio = servicioSeleccionado
 
-                        if(cliente != null || empleado != null || servicio != null) {
-                            loadingDialog = LoadingDialog()
-                            loadingDialog.show(fragmentManager!!, "LoadingDialog")
-                            var cita:Cita = Cita(idCita, cliente, empleado!!, servicio!!, fecha)
+                            if(cliente != null && empleado != null && servicio != null && fecha != null) {
+                                loadingDialog = LoadingDialog()
+                                loadingDialog.show(fragmentManager!!, "LoadingDialog")
+                                var cita:Cita = Cita(idCita, cliente, empleado!!, servicio!!, fecha)
 
-                            val trabajoGuardarCita = guardarCita(cita)
+                                val trabajoGuardarCita = guardarCita(cita)
 
-                            trabajoGuardarCita.invokeOnCompletion {
-                                loadingDialog.changeAnimationLaunch(true)
-                                CitasFragment.inicializarFechas()
-                                dialog?.dismiss()
+                                trabajoGuardarCita.invokeOnCompletion {
+                                    loadingDialog.changeAnimationLaunch(true)
+                                    CitasFragment.inicializarFechas()
+                                    dialog?.dismiss()
+                                }
+
+                            } else {
+                                withContext(Dispatchers.Main) {
+                                    Toast.makeText(contextoActivityMain, "Porfavor seleccione los detalles de la cita", Toast.LENGTH_LONG).show()
+                                }
                             }
-                        } else {
-                            withContext(Dispatchers.Main) {
-                                Toast.makeText(contextoActivityMain, "Porfavor seleccione los detalles de la cita", Toast.LENGTH_LONG).show()
-                            }
+
+                        } catch (e: TimeoutCancellationException) {
+                            e.printStackTrace()
+                            loadingDialog.changeAnimationLaunch(false)
+                            dialog?.dismiss()
                         }
-
-                    } catch (e: TimeoutCancellationException) {
-                        e.printStackTrace()
-                        loadingDialog.changeAnimationLaunch(false)
-                        dialog?.dismiss()
                     }
-
                 }
+            } else {
+
+                Toast.makeText(contextoActivityMain, "Porfavor revise su conexion a internet", Toast.LENGTH_LONG).show()
+
             }
         }
+
 
         tv_fechaCita.text = "Fecha seleccionada: ".plus(Editable.Factory.getInstance().newEditable(SimpleDateFormat("EEE dd/MM/yyyy")
             .format(CitasFragment.fechaSeleccionada.time)))
@@ -246,7 +255,7 @@ class AgregarCitaDialog : DialogFragment() {
         obtenerUsuario()
     }
 
-    private lateinit var cliente:Usuario
+    private var cliente:Usuario ?= null
 
     private fun obtenerUsuario() {
         val coincidencias = CoroutineScope(Dispatchers.IO).launch {
@@ -258,6 +267,28 @@ class AgregarCitaDialog : DialogFragment() {
             }
         }
 
+    }
+
+    fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
     }
 
 

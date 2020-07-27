@@ -3,13 +3,17 @@ package cervantes.jonatan.pruebahorario.dialogs
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import cervantes.jonatan.pruebahorario.R
 import cervantes.jonatan.pruebahorario.entidades.Empleado
@@ -63,7 +67,6 @@ class AgregarEmpleadoDialog : DialogFragment() {
             var nombre = et_nombreEmpleado.text.toString()
 
             val imagen = CoroutineScope(Dispatchers.IO).async {
-                Log.d("AgregarEmpleadoDialog", "Entrando al upload image empleado")
                 uploadImageToStorage("img_${nombre}")
             }
 
@@ -71,13 +74,13 @@ class AgregarEmpleadoDialog : DialogFragment() {
                 var horario = et_horarioEmpleado.text.toString()
                 var email = et_emailEmpleado.text.toString()
 
-                if(nombre == "" || horario == "" || email == "" || imagen == null) {
+                if(nombre == "" || horario == "" || email == "" || imagen.await() == "") {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(contextoActivityMain, "Porfavor llene todos los campos", Toast.LENGTH_LONG).show()
                     }
                 } else {
                     try {
-                        withTimeout(TIEMPO_TIMEOUT) {
+                        withTimeout(5000) {
                             loadingDialog = LoadingDialog()
                             loadingDialog.show(fragmentManager!!, "LoadingDialog")
                             var empleado =  Empleado(0,
@@ -114,24 +117,34 @@ class AgregarEmpleadoDialog : DialogFragment() {
     }
 
     private suspend fun uploadImageToStorage(fileName: String) : String {
-        try {
-            curFile?.let {
-                imagesRef.child("images/$fileName").putFile(it).await()
-                Log.d("AgregarEmpleadoDialog", "Se subio la imagen")
-            }
-            val urlImagen = imagesRef.child("images/$fileName").downloadUrl.await().toString()
+        if(isOnline(contextoActivityMain!!)) {
+            if(curFile != null) {
+                try {
+                    curFile?.let {
+                        imagesRef.child("images/$fileName").putFile(it).await()
+                        Log.d("AgregarEmpleadoDialog", "Se subio la imagen")
+                    }
+                    val urlImagen = imagesRef.child("images/$fileName").downloadUrl.await().toString()
 
-            withContext(Dispatchers.Main) {
-                Toast.makeText(contextoActivityMain, "Se subio la imagen al storage y se obtuvo URL", Toast.LENGTH_LONG).show()
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(contextoActivityMain, "Se subio la imagen al storage y se obtuvo URL", Toast.LENGTH_LONG).show()
+                    }
+                    return urlImagen
+                } catch (e: Exception) {
+                    Log.d("AgregarEmpleadoDialog", e.message)
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(contextoActivityMain, e.message, Toast.LENGTH_LONG).show()
+                    }
+                }
             }
-            return urlImagen
-        } catch (e: Exception) {
-            Log.d("AgregarEmpleadoDialog", e.message)
+
+        } else {
             withContext(Dispatchers.Main) {
-                Toast.makeText(contextoActivityMain, e.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(contextoActivityMain, "Porfavor revise su conexion a internet", Toast.LENGTH_LONG).show()
             }
         }
-        return "SinURLDeImagen"
+
+        return ""
     }
 
     private fun guardarEmpleado(empleado: Empleado)  = CoroutineScope(Dispatchers.IO).launch{
@@ -147,6 +160,29 @@ class AgregarEmpleadoDialog : DialogFragment() {
                 Toast.makeText(contextoActivityMain, e.message, Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+
+    fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
     }
 
 

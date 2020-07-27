@@ -122,26 +122,28 @@ class EmpleadosFragment : Fragment() {
 
     private fun subscribeToRealtimeUpdates() {
         empleadosCollectionRef.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-            firebaseFirestoreException?.let {
-                Toast.makeText(view!!.context, it.message, Toast.LENGTH_LONG).show()
-                return@addSnapshotListener
-            }
-
             var job = CoroutineScope(Dispatchers.IO).launch {
-                listaEmpleados.clear()
-                listaIdDocumentos.clear()
-                querySnapshot?.let {
-                    for (document in it) {
-                        var empleado = document.toObject<Empleado>()
-                        listaEmpleados.add(empleado)
-                        listaIdDocumentos.add(document.id)
-                    }
-                    withContext(Dispatchers.Main) {
-                        adapter!!.empleadosRv = llenarListaRecyclerView()
-                        adapter!!.notifyDataSetChanged()
+                firebaseFirestoreException?.let {
+                    Toast.makeText(view!!.context, it.message, Toast.LENGTH_LONG).show()
+                    return@launch
+                }
+                if(activity!=null) {
+                    listaEmpleados.clear()
+                    listaIdDocumentos.clear()
+                    querySnapshot?.let {
+                        for (document in it) {
+                            var empleado = document.toObject<Empleado>()
+                            listaEmpleados.add(empleado)
+                            listaIdDocumentos.add(document.id)
+                        }
+                        withContext(Dispatchers.Main) {
+                            adapter!!.empleadosRv = llenarListaRecyclerView()
+                            adapter!!.notifyDataSetChanged()
+                        }
                     }
                 }
-            }
+
+            }//Termina el job
         }
     }
 

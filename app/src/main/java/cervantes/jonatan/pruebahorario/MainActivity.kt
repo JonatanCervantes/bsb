@@ -22,6 +22,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.MenuView
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.FragmentManager
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.coroutines.*
@@ -78,10 +79,18 @@ class MainActivity : AppCompatActivity() {
     public fun cerrarSesion(item: MenuItem) {
         auth.signOut()
         this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE).edit().clear().apply()
+        val contexto = this
 
-        Log.d("MainACtivity", "Cerro sesion");
-        startActivity( Intent(this, LoginActivity::class.java))
+        var intent:Intent = Intent(contexto, LoginActivity::class.java)
+        intent.clearStack()
+        startActivity(intent)
+            //supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 
+
+    }
+
+    fun Intent.clearStack() {
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     }
 
     override fun onSupportNavigateUp(): Boolean {
