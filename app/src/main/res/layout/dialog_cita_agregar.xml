@@ -5,94 +5,115 @@
     android:layout_margin="@dimen/layoutsMargin"
     android:background="@drawable/background_citas_dialog">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/layoutsPadding">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_detallesCita"
-            android:text="@string/tituloAgregarCita"
-            android:gravity="center"
-            android:layout_margin="@dimen/layoutsMargin"
-            android:textSize="@dimen/titlesTextSize"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_fechaCita"
-            android:text="Fecha de la cita: "
-            android:layout_margin="@dimen/layoutsMargin"
-            android:textSize="@dimen/subtitleTextSize"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_horaCita"
-            android:text="Hora: "
-            android:layout_margin="@dimen/layoutsMargin"
-            android:textSize="@dimen/subtitleTextSize"
-            />
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/hscrollViewEmpleados"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:id="@+id/ll_viewEmpleados"
-                />
-
-        </HorizontalScrollView>
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/hscrollViewServicios"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:id="@+id/ll_viewServicios"
-                />
-
-        </HorizontalScrollView>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="@dimen/layoutsMargin">
+            android:orientation="vertical"
+            android:padding="@dimen/layoutsPadding">
 
-            <Button
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_cancel"
-                android:text="@string/buttonCancelar"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                android:id="@+id/tv_detallesCita"
+                android:text="@string/tituloAgregarCita"
+                android:gravity="center"
+                android:layout_margin="@dimen/layoutsMargin"
+                android:textSize="@dimen/titlesTextSize"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_fechaCita"
+                android:text="Fecha de la cita: "
+                android:layout_margin="@dimen/layoutsMargin"
+                android:textSize="@dimen/subtitleTextSize"
                 />
 
-            <Button
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_ok"
-                android:text="@string/buttonAgregar"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                android:id="@+id/tv_horaCita"
+                android:text="Hora: "
+                android:layout_marginHorizontal="@dimen/layoutsMargin"
+                android:textSize="@dimen/subtitleTextSize"
                 />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Seleccione un empleado"
+                android:textSize="@dimen/regularDialogTextSize"
+                android:layout_marginHorizontal="@dimen/layoutsMargin"
+                />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/hscrollViewEmpleados"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/ll_viewEmpleados"
+                    />
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Seleccione un servicio"
+                android:textSize="@dimen/regularDialogTextSize"
+                android:layout_marginHorizontal="@dimen/layoutsMargin"
+                />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/hscrollViewServicios"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/ll_viewServicios"
+                    />
+
+            </HorizontalScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/layoutsMargin">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_cancel"
+                    android:text="@string/buttonCancelar"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                    />
+
+                <Button
+                    android:id="@+id/tv_ok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                    android:layout_weight="1"
+                    android:text="@string/buttonAgregar" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

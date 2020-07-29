@@ -2,41 +2,29 @@ package cervantes.jonatan.pruebahorario.ui.servicios
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import cervantes.jonatan.pruebahorario.dialogs.AgregarServicioDialog
 import cervantes.jonatan.pruebahorario.R
-import cervantes.jonatan.pruebahorario.entidades.Servicio
-import cervantes.jonatan.pruebahorario.utilidades.RolUsuario
-import cervantes.jonatan.pruebahorario.utilidades.ServicioAdapter
-import cervantes.jonatan.pruebahorario.utilidades.ServicioRV
-import cervantes.jonatan.pruebahorario.utilidades.TiposUsuario
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.ktx.Firebase
+import cervantes.jonatan.pruebahorario.firebase.ServiciosRepository
+import cervantes.jonatan.pruebahorario.utilidades.*
 import kotlinx.android.synthetic.main.fragment_servicios.*
 import kotlinx.coroutines.*
 import kotlin.collections.ArrayList
 
 class ServiciosFragment : Fragment() {
 
-    private lateinit var serviciosViewModel: ServiciosViewModel
+    private lateinit var viewModel: ServiciosViewModel
     private var adapter: ServicioAdapter?= null
-    private val serviciosCollectionRef = Firebase.firestore.collection("servicios")
-    private var listaServicios:ArrayList<Servicio> = ArrayList<Servicio>()
-    private var listaIdDocumentos:ArrayList<String> = ArrayList<String>()
 
     companion object {
         var  eliminarActivado:Boolean = false
@@ -44,13 +32,8 @@ class ServiciosFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        serviciosViewModel =
-                ViewModelProviders.of(this).get(ServiciosViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(ServiciosViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_servicios, container, false)
-//        val textView: TextView = root.findViewById(R.id.text_gallery)
-//        galleryViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
         return root
     }
 
@@ -59,40 +42,58 @@ class ServiciosFragment : Fragment() {
 
         adminFragmento = fragmentManager
 
-        var job = CoroutineScope(Dispatchers.IO).launch {
-            adapter = ServicioAdapter(llenarListaRecyclerView())
-            subscribeToRealtimeUpdatesLaunch()
-        }
+        val adapterDeferred = inicializarAdapterVacioAsync()
 
-        runBlocking {
-            job.join()
-        }
-
-        rv_servicios.adapter = adapter
-        rv_servicios.layoutManager = LinearLayoutManager(view.context)
-
-
-        val fabAgregarServicio: FloatingActionButton = view.findViewById(R.id.fab_agregarServicio)
-        fabAgregarServicio.setOnClickListener { view ->
-            var dialog: AgregarServicioDialog =
-                AgregarServicioDialog()
-            dialog.show(fragmentManager!!, "AgregarServicioDialog")
-        }
-        val fabEliminarServicio:FloatingActionButton = view.findViewById(R.id.fab_eliminarServicio)
-        fabEliminarServicio.setOnClickListener {
-            eliminarActivado = !eliminarActivado
-
-            if(eliminarActivado) {
-                fabEliminarServicio.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorSecundarioFAB))
-            } else {
-                fabEliminarServicio.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorAccent))
-            }
+        CoroutineScope(Dispatchers.Main).launch {
+            adapter = adapterDeferred.await()
+            rv_servicios.adapter = adapter
+            rv_servicios.layoutManager = LinearLayoutManager(view.context)
         }
 
         rl_adminServicios.isEnabled = false
         rl_adminServicios.isVisible = false
 
         habilitarAdminServicios()
+
+        fab_agregarServicio.setOnClickListener { view ->
+            var dialog: AgregarServicioDialog =
+                AgregarServicioDialog()
+            dialog.show(fragmentManager!!, "AgregarServicioDialog")
+        }
+
+        fab_eliminarServicio.setOnClickListener {
+            viewModel.cambiarEstado(0)
+        }
+
+        viewModel.eliminarActivado.observe(this, Observer {
+            eliminarActivado = viewModel.obtenerEliminarActivado()
+            if(eliminarActivado) {
+                fab_eliminarServicio.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorSecundarioFAB))
+            } else {
+                fab_eliminarServicio.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorAccent))
+            }
+        })
+
+        viewModel.listaServiciosRV.observe(this, Observer {
+            CoroutineScope(Dispatchers.Main).launch {
+                adapter!!.serviciosRv = it
+                adapter!!.notifyDataSetChanged()
+            }
+        })
+
+        ServiciosRepository.listaServicios.observe(this, Observer {
+            viewModel.llenarListaRecyclerView(it)
+        })
+
+    }
+
+    private fun inicializarAdapterVacioAsync() = CoroutineScope(Dispatchers.Default).async {
+        inicializarAdapterVacio()
+    }
+
+    private suspend fun inicializarAdapterVacio() : ServicioAdapter{
+            var servicioRvList = ArrayList<ServicioRV>()
+            return ServicioAdapter(servicioRvList)
     }
 
     private fun habilitarAdminServicios() {
@@ -100,61 +101,12 @@ class ServiciosFragment : Fragment() {
             getString(R.string.preference_file_key), Context.MODE_PRIVATE) ?: return
         val rolActual = sharedPref.getString(getString(R.string.rol_usuario), "defaultValue")
 
-        Log.d("EmpleadosFragment", rolActual)
+        Log.d("ServiciosFragment", rolActual)
         if(rolActual == (TiposUsuario.EMPLEADO.name)) {
             rl_adminServicios.isEnabled = true
             rl_adminServicios.isVisible = true
         }
     }
 
-    fun subscribeToRealtimeUpdatesLaunch() = CoroutineScope(Dispatchers.IO).launch {
-        subscribeToRealtimeUpdates()
-    }
-
-
-    private fun subscribeToRealtimeUpdates(){
-        serviciosCollectionRef.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-            var job = CoroutineScope(Dispatchers.IO).launch {
-                firebaseFirestoreException?.let {
-                    Toast.makeText(view!!.context, it.message, Toast.LENGTH_LONG).show()
-                    return@launch
-                }
-
-                if(activity != null) {
-                    listaServicios.clear()
-                    listaIdDocumentos.clear()
-                    querySnapshot?.let {
-                        for (document in it) {
-                            var servicio = document.toObject<Servicio>()
-                            listaServicios.add(servicio)
-                            listaIdDocumentos.add(document.id)
-                        }
-                        withContext(Dispatchers.Main) {
-                            adapter!!.serviciosRv = llenarListaRecyclerView()
-                            adapter!!.notifyDataSetChanged()
-                        }
-                    }
-                }
-
-            }//Termina el job
-        }
-    }
-
-    private suspend fun llenarListaRecyclerView(): ArrayList<ServicioRV> {
-
-        var servicioRvList = ArrayList<ServicioRV>()
-
-        for (i in listaServicios.indices) {
-            var servicioRv = ServicioRV("", 0.0f, 0, listaIdDocumentos[i], "")
-            servicioRv.nombre = listaServicios[i]!!.nombre
-            servicioRv.duracion = listaServicios[i]!!.duracion
-            servicioRv.precio = listaServicios[i]!!.precio
-            servicioRv.imagen = listaServicios[i]!!.imagen
-
-            servicioRvList.add(servicioRv)
-        }
-
-        return servicioRvList
-    }
 
 }

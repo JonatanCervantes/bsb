@@ -28,7 +28,7 @@
                     android:autoSizeTextType="none"
                     android:gravity="center"
                     android:text="Nombre Empleado"
-                    android:textSize="@dimen/regularDialogTextSize" />
+                    android:textSize="@dimen/smallTextSize" />
 
         </LinearLayout>
 

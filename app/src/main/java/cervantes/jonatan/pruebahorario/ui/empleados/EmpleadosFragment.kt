@@ -7,8 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -17,27 +15,15 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import cervantes.jonatan.pruebahorario.R
 import cervantes.jonatan.pruebahorario.dialogs.AgregarEmpleadoDialog
-import cervantes.jonatan.pruebahorario.dialogs.AgregarServicioDialog
-import cervantes.jonatan.pruebahorario.entidades.Empleado
-import cervantes.jonatan.pruebahorario.entidades.Servicio
-import cervantes.jonatan.pruebahorario.entidades.Usuario
-import cervantes.jonatan.pruebahorario.ui.servicios.ServiciosFragment
+import cervantes.jonatan.pruebahorario.firebase.EmpleadosRepository
 import cervantes.jonatan.pruebahorario.utilidades.*
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_empleados.*
-import kotlinx.android.synthetic.main.fragment_servicios.*
 import kotlinx.coroutines.*
 
 class EmpleadosFragment : Fragment() {
 
-    private lateinit var slideshowViewModel: EmpleadosViewModel
-    private var adapter: EmpleadoAdapter?= null
-    private val empleadosCollectionRef = Firebase.firestore.collection("empleados")
-    private var listaEmpleados:ArrayList<Empleado> = ArrayList<Empleado>()
-    private var listaIdDocumentos:ArrayList<String> = ArrayList<String>()
+    private lateinit var viewModel: EmpleadosViewModel
+    private lateinit var adapter: EmpleadoAdapter
 
     companion object {
         var  eliminarActivado:Boolean = false
@@ -46,13 +32,8 @@ class EmpleadosFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        slideshowViewModel = ViewModelProviders.of(this).get(EmpleadosViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_empleados, container, false)
-//        val textView: TextView = root.findViewById(R.id.text_slideshow)
-//        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
-        return root
+        viewModel = ViewModelProviders.of(this).get(EmpleadosViewModel::class.java)
+        return inflater.inflate(R.layout.fragment_empleados, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,17 +41,18 @@ class EmpleadosFragment : Fragment() {
 
         adminFragmento = fragmentManager
 
-        var job = CoroutineScope(Dispatchers.IO).launch {
-            adapter = EmpleadoAdapter(llenarListaRecyclerView())
-            subscribeToRealtimeUpdatesLaunch()
+        val adapterDeferred = inicializarAdapterVacioAsync()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            adapter = adapterDeferred.await()
+            rv_empleados.adapter = adapter
+            rv_empleados.layoutManager = LinearLayoutManager(view.context)
         }
 
-        runBlocking {
-            job.join()
-        }
+        rl_adminEmpleados.isEnabled = false
+        rl_adminEmpleados.isVisible = false
 
-        rv_empleados.adapter = adapter
-        rv_empleados.layoutManager = LinearLayoutManager(view.context)
+        hablitarAdminEmpleados()
 
         fab_agregarEmpleado.setOnClickListener { view ->
             var dialog: AgregarEmpleadoDialog =
@@ -79,29 +61,50 @@ class EmpleadosFragment : Fragment() {
         }
 
         fab_eliminarEmpleado.setOnClickListener {
-            eliminarActivado = !eliminarActivado
+            viewModel.cambiarEstado(0)
+        }
 
+        fab_modificarEmpleado.setOnClickListener {
+            viewModel.cambiarEstado(1)
+        }
+
+        viewModel.eliminarActivado.observe(this, Observer {
+            eliminarActivado = viewModel.obtenerEliminarActivado()
             if(eliminarActivado) {
                 fab_eliminarEmpleado.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorSecundarioFAB))
             } else {
                 fab_eliminarEmpleado.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorAccent))
             }
-        }
+        })
 
-        fab_modificarEmpleado.setOnClickListener {
-            modificarActivado = !modificarActivado
-
+        viewModel.modificarActivado.observe(this, Observer {
+            modificarActivado = viewModel.obtenerModificarActivado()
             if(modificarActivado) {
                 fab_modificarEmpleado.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorSecundarioFAB))
             } else {
                 fab_modificarEmpleado.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorAccent))
             }
-        }
+        })
 
-        rl_adminEmpleados.isEnabled = false
-        rl_adminEmpleados.isVisible = false
+        viewModel.listaEmpleadosRV.observe(this, Observer {
+            CoroutineScope(Dispatchers.Main).launch {
+                adapter.empleadosRv = it
+                adapter.notifyDataSetChanged()
+            }
+        })
 
-        hablitarAdminEmpleados()
+        EmpleadosRepository.listaEmpleados.observe(this, Observer {
+            viewModel.llenarListaRecyclerView(it)
+        })
+    }
+
+    private fun inicializarAdapterVacioAsync() = CoroutineScope(Dispatchers.Default).async {
+        inicializarAdapterVacio()
+    }
+
+    private suspend fun inicializarAdapterVacio() : EmpleadoAdapter{
+        var empleadoRvList = ArrayList<EmpleadoRV>()
+        return EmpleadoAdapter(empleadoRvList)
     }
 
     private fun hablitarAdminEmpleados() {
@@ -115,58 +118,4 @@ class EmpleadosFragment : Fragment() {
             rl_adminEmpleados.isVisible = true
         }
     }
-
-    fun subscribeToRealtimeUpdatesLaunch() = CoroutineScope(Dispatchers.IO).launch {
-        subscribeToRealtimeUpdates()
-    }
-
-    private fun subscribeToRealtimeUpdates() {
-        empleadosCollectionRef.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-            var job = CoroutineScope(Dispatchers.IO).launch {
-                firebaseFirestoreException?.let {
-                    Toast.makeText(view!!.context, it.message, Toast.LENGTH_LONG).show()
-                    return@launch
-                }
-                if(activity!=null) {
-                    listaEmpleados.clear()
-                    listaIdDocumentos.clear()
-                    querySnapshot?.let {
-                        for (document in it) {
-                            var empleado = document.toObject<Empleado>()
-                            listaEmpleados.add(empleado)
-                            listaIdDocumentos.add(document.id)
-                        }
-                        withContext(Dispatchers.Main) {
-                            adapter!!.empleadosRv = llenarListaRecyclerView()
-                            adapter!!.notifyDataSetChanged()
-                        }
-                    }
-                }
-
-            }//Termina el job
-        }
-    }
-
-    private suspend fun llenarListaRecyclerView(): ArrayList<EmpleadoRV> {
-
-        var empleadoRvList = ArrayList<EmpleadoRV>()
-
-        for (i in listaEmpleados.indices) {
-            var empleadoRv = EmpleadoRV("", "", "", listaIdDocumentos[i], "", R.raw.mreddot,"")
-            empleadoRv.nombre = listaEmpleados[i]!!.nombre
-            empleadoRv.email = listaEmpleados[i]!!.email
-            empleadoRv.fotoPerfil = listaEmpleados[i]!!.fotoPerfil
-            empleadoRv.horario = listaEmpleados[i]!!.horario
-            empleadoRv.disponibilidad = listaEmpleados[i]!!.disponibilidad
-            if(empleadoRv.disponibilidad == Disponibilidades.DISPONIBLE.name) {
-                empleadoRv.animacionDisponibilidad = R.raw.mpulsing
-            }
-            empleadoRvList.add(empleadoRv)
-        }
-
-        return empleadoRvList
-    }
-
-
-
 }

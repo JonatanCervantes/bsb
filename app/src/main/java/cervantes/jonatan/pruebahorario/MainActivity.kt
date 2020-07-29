@@ -66,7 +66,6 @@ class MainActivity : AppCompatActivity() {
             emailUsuario.text = auth.currentUser!!.email
         }
 
-
     }
 
 
@@ -76,17 +75,14 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    public fun cerrarSesion(item: MenuItem) {
+    fun cerrarSesion(item: MenuItem) {
         auth.signOut()
         this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE).edit().clear().apply()
         val contexto = this
 
-        var intent:Intent = Intent(contexto, LoginActivity::class.java)
+        var intent = Intent(contexto, LoginActivity::class.java)
         intent.clearStack()
         startActivity(intent)
-            //supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-
-
     }
 
     fun Intent.clearStack() {
