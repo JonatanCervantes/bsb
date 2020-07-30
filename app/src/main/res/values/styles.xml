@@ -1,5 +1,9 @@
 <resources>
 
+    <style name="actionMenuTextAppearance" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu">
+        <item name="android:textSize">@dimen/regularDialogTextSize</item>
+    </style>
+
     <style name="button" parent="Widget.AppCompat.Button">
         <item name="background">@drawable/background_buttons</item>
         <item name="android:background">@drawable/background_buttons</item>
@@ -109,7 +113,7 @@
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
 
-        <item name="fontFamily">@font/gravity_regular</item>
+        <item name="fontFamily">@font/medulaone</item>
         <item name="android:textColorSecondary">@color/dustyWhite</item>
         <item name="android:textColor">@color/dustyWhite</item>
 
@@ -120,6 +124,8 @@
         <item name="checkboxStyle">@style/checkBox</item>
         <item name="android:buttonStyle">@style/button</item>
         <item name="imageButtonStyle">@style/imageButton</item>
+        <item name="actionMenuTextAppearance">@style/actionMenuTextAppearance</item>
+        <item name="android:actionMenuTextAppearance">@style/actionMenuTextAppearance</item>
 
     </style>
 

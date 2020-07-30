@@ -28,8 +28,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_fechaCita"
                 android:text="Fecha de la cita: "
-                android:layout_margin="@dimen/layoutsMargin"
-                android:textSize="@dimen/subtitleTextSize"
+                android:layout_marginHorizontal="@dimen/layoutsMargin"
+                android:textSize="@dimen/regularDialogTextSize"
                 />
 
             <TextView
@@ -38,7 +38,7 @@
                 android:id="@+id/tv_horaCita"
                 android:text="Hora: "
                 android:layout_marginHorizontal="@dimen/layoutsMargin"
-                android:textSize="@dimen/subtitleTextSize"
+                android:textSize="@dimen/regularDialogTextSize"
                 />
 
             <TextView
@@ -48,6 +48,7 @@
                 android:textSize="@dimen/regularDialogTextSize"
                 android:layout_marginHorizontal="@dimen/layoutsMargin"
                 />
+
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -68,6 +69,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Seleccione un servicio"
+                android:textSize="@dimen/regularDialogTextSize"
+                android:layout_marginHorizontal="@dimen/layoutsMargin"
+                />
+
+            <TextView
+                android:id="@+id/tv_duracionAproximada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Duración aproximada: "
                 android:textSize="@dimen/regularDialogTextSize"
                 android:layout_marginHorizontal="@dimen/layoutsMargin"
                 />

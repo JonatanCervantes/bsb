@@ -26,7 +26,7 @@
             android:layout_height="@dimen/imageViewDialogHeight"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/servicioDefault"
             android:layout_gravity="center"
             android:id="@+id/iv_imagenServicio"
             />

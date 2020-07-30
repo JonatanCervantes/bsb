@@ -1,20 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    tools:context=".ui.home.HomeFragment">
+    android:columnCount="1"
+    android:layout_margin="@dimen/layoutsMargin"
+    tools:context=".main.aplicacion.ui.HomeFragment">
 
-
-    <TextView
-        android:id="@+id/tv_home"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Jelou!"
-        android:gravity="center"/>
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/layoutsMargin">
+
+        <ImageView
+            android:layout_weight="@dimen/columnWeightImagenesAyuda"
+            android:layout_height="@dimen/standardHeightImageView"
+            android:src="@drawable/ic_baseline_calendar_today_24"
+            android:layout_width="@dimen/ceroWidth" />
+
+        <TextView
+            android:id="@+id/tv_ayudaCitas"
+            android:layout_width="@dimen/ceroWidth"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/subtitleTextSize"
+            android:text="Hola"
+            android:layout_weight="@dimen/columnWeightTextosAyudas"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/heightSeparador"
+        android:layout_marginTop="@dimen/layoutsMargin"
+        android:layout_marginHorizontal="@dimen/horizontalMarginSeparador"
+        android:backgroundTint="@color/fullWhiteAlpha"
+        android:background="@color/fullWhiteAlpha" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/layoutsMargin">
+
+        <ImageView
+            android:layout_weight="@dimen/columnWeightImagenesAyuda"
+            android:layout_height="@dimen/standardHeightImageView"
+            android:src="@drawable/ic_baseline_format_list_bulleted_24"
+            android:layout_width="0dp" />
+
+        <TextView
+            android:id="@+id/tv_ayudaServicios"
+            android:layout_width="@dimen/ceroWidth"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/subtitleTextSize"
+            android:text="Hola"
+            android:layout_weight="@dimen/columnWeightTextosAyudas"
+            />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/heightSeparador"
+        android:layout_marginTop="@dimen/layoutsMargin"
+        android:layout_marginHorizontal="@dimen/horizontalMarginSeparador"
+        android:backgroundTint="@color/fullWhiteAlpha"
+        android:background="@color/fullWhiteAlpha" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/layoutsMargin">
+
+        <ImageView
+            android:layout_weight="@dimen/columnWeightImagenesAyuda"
+            android:layout_height="@dimen/standardHeightImageView"
+            android:src="@drawable/ic_baseline_face_24"
+            android:layout_width="@dimen/ceroWidth"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_ayudaEmpleados"
+            android:layout_width="@dimen/ceroWidth"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/subtitleTextSize"
+            android:text="Hola"
+            android:layout_weight="@dimen/columnWeightTextosAyudas"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/heightSeparador"
+        android:layout_marginTop="@dimen/layoutsMargin"
+        android:layout_marginHorizontal="@dimen/horizontalMarginSeparador"
+        android:backgroundTint="@color/fullWhiteAlpha"
+        android:background="@color/fullWhiteAlpha" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/layoutsMargin">
+
+        <TextView
+            android:id="@+id/tv_ayudaExtra"
+            android:layout_width="@dimen/ceroWidth"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/subtitleTextSize"
+            android:text="Hola"
+            android:layout_weight="@dimen/columnWeightImagenesAyuda"
+            />
+    </LinearLayout>
 
 
-</LinearLayout>
+
+
+
+
+
+
+
+
+</GridLayout>
+

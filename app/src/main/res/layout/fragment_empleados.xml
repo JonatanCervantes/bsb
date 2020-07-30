@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.empleados.EmpleadosFragment">
-
+    tools:context=".empleados.aplicacion.ui.EmpleadosFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -18,14 +17,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:paddingVertical="20dp">
+        android:paddingVertical="@dimen/relativeLayoutPadding">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_agregarEmpleado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/fab_margin"
-            android:layout_marginTop="0dp"
             app:borderWidth="0dp"
             app:srcCompat="@drawable/ic_baseline_add_24" />
 
@@ -34,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/fab_margin"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="@dimen/fabTopMarginOne"
             app:borderWidth="0dp"
             app:srcCompat="@drawable/ic_baseline_edit_24" />
 
@@ -43,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/fab_margin"
-            android:layout_marginTop="140dp"
+            android:layout_marginTop="@dimen/fabTopMarginTwo"
             app:borderWidth="0dp"
             app:srcCompat="@drawable/ic_baseline_delete_24"
             />

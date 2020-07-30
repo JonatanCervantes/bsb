@@ -3,23 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginVertical="5dp"
-    android:padding="3dp"
+    android:layout_marginVertical="@dimen/mainViewsVerticalMargin"
+    android:padding="@dimen/layoutsPadding"
     >
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="140dp"
+                    android:layout_width="@dimen/widthImageViewFragment"
+                    android:layout_height="@dimen/heightImageViewFragment"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
                     android:src="@mipmap/ic_launcher"
                     android:id="@+id/iv_imagenServicio"
-                    android:layout_marginHorizontal="10dp"/>
+                    android:layout_marginHorizontal="@dimen/layoutsMargin"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -28,36 +27,67 @@
 
                         <TextView
                             android:id="@+id/tv_nombreServicio"
-                            android:layout_width="220dp"
-                            android:layout_height="30dp"
-                            android:textSize="24sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/titlesTextSize"
                             android:autoSizeTextType="none"
                             android:textAllCaps="true"
                             android:gravity="center"
                             android:text="Nombre Servicio"
+                            android:textStyle="bold"
                             />
 
-                        <TextView
-                            android:id="@+id/tv_duracionServicio"
-                            android:layout_width="220dp"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="3dp"
-                            android:autoSizeTextType="none"
-                            android:textSize="16sp"
-                            android:gravity="left"
-                            android:text="Duracion Servicio"
-                            />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="@dimen/layoutsMargin">
 
-                        <TextView
-                            android:id="@+id/tv_precioServicio"
-                            android:layout_width="220dp"
-                            android:layout_height="50dp"
-                            android:layout_marginTop="3dp"
-                            android:textSize="16sp"
-                            android:autoSizeTextType="none"
-                            android:gravity="left"
-                            android:text="Precio Servicio"
-                            />
+                                <ImageView
+                                    android:layout_width="@dimen/smallHeightImageView"
+                                    android:layout_height="@dimen/smallHeightImageView"
+                                        android:src="@drawable/ic_baseline_timer_24"/>
+
+                                <TextView
+                                    android:id="@+id/tv_duracionServicio"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/smallMarginTop"
+                                    android:autoSizeTextType="none"
+                                    android:textSize="@dimen/regularDialogTextSize"
+                                    android:gravity="left"
+                                    android:text="Duracion Servicio"
+                                    android:textStyle="italic"
+                                    />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/layoutsMargin">
+
+                                <ImageView
+                                    android:layout_width="@dimen/smallHeightImageView"
+                                    android:layout_height="@dimen/smallHeightImageView"
+                                        android:src="@drawable/ic_baseline_monetization_on_24"/>
+
+                                <TextView
+                                    android:id="@+id/tv_precioServicio"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/smallMarginTop"
+                                    android:textSize="@dimen/regularDialogTextSize"
+                                    android:autoSizeTextType="none"
+                                    android:gravity="left"
+                                    android:text="Precio Servicio"
+                                    android:textStyle="italic"
+                                    />
+
+
+                        </LinearLayout>
 
                 </LinearLayout>
 
@@ -65,9 +95,9 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="15dp"
+            android:layout_height="@dimen/heightSeparador"
+            android:layout_marginTop="@dimen/marginTopSeparador"
+            android:layout_marginHorizontal="@dimen/horizontalMarginSeparador"
             android:backgroundTint="@color/fullWhiteAlpha"
             android:background="@color/fullWhiteAlpha" />
 

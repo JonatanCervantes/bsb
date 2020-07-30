@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_header_height"
+    android:layout_height="wrap_content"
     android:background="@drawable/background_main_theme"
     android:gravity="bottom"
     android:orientation="vertical"
@@ -14,8 +14,8 @@
 
     <ImageView
         android:id="@+id/iv_imagenLogo"
-        android:layout_width="150dp"
-        android:layout_height="108dp"
+        android:layout_width="@dimen/widthImageViewDrawer"
+        android:layout_height="@dimen/heightImageViewDrawer"
         android:contentDescription="@string/nav_header_desc"
         app:srcCompat="@drawable/img_geralt" />
 
@@ -24,12 +24,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/nav_header_title"
+        android:textSize="@dimen/regularDialogTextSize"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/tv_emailUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/regularDialogTextSize"
         android:text="@string/nav_header_subtitle" />
 
 </LinearLayout>

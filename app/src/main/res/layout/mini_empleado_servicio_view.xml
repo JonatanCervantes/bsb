@@ -14,8 +14,8 @@
 
                 <ImageView
                     android:id="@+id/iv_imagenEmpleadoServicio"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="@dimen/imageViewDialogWidth"
+                    android:layout_height="@dimen/imageViewDialogHeight"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
                     android:src="@mipmap/ic_launcher"
