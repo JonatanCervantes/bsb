@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PruebaHorario</string>
+    <string name="app_name">Barber Brothers</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Nombre usuario default</string>
@@ -30,6 +30,17 @@
 
     <string name="operacion_exitosa">Se realizó el registro con éxito</string>
     <string name="operacion_fallida">Ocurrió un error. Porfavor inténtelo de nuevo más tarde</string>
+    <string name="empalmeCitas">No se pudo realizar el registro porque existiría un empalme de citas</string>
+    <string name="precio">Precio: $</string>
+    <string name="duracionAproximada">Duración aproximada: </string>
+    <string name="minutos"> minutos</string>
+    <string name="fechaSeleccionada">Fecha seleccionada: </string>
+    <string name="hora">Hora: </string>
+
+    <string name="avisoInternet">Porfavor revise su conexión a internet</string>
+    <string name="avisoCita">Porfavor seleccione los detalles de la cita</string>
+
+
     <string name="home_second">Home Second</string>
     <string name="disponible">Hora Disponible</string>
     <string name="web_client_id">1044259338690-f8pf174ojakh8q1t7ipmaurqaau2l3ii.apps.googleusercontent.com</string>

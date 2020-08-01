@@ -1,7 +1,14 @@
 <resources>
 
-    <style name="actionMenuTextAppearance" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu">
+    <style name="AppNavigationViewStyle" parent="Widget.MaterialComponents.NavigationView">
+        <item name="itemTextAppearance">@style/AppNavigationViewItemTextAppearance</item>
+        <item name="itemIconTint">@color/fullWhite</item>
+        <item name="itemTextColor">@color/dustyWhite</item>
+    </style>
+
+    <style name="AppNavigationViewItemTextAppearance" parent="@style/TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:textSize">@dimen/regularDialogTextSize</item>
+        <item name="fontFamily">@font/qhytsdakx</item>
     </style>
 
     <style name="button" parent="Widget.AppCompat.Button">
@@ -10,8 +17,6 @@
         <item name="backgroundTint">@color/fullWhite</item>
         <item name="android:textColor">@color/textoBotones</item>
         <item name="textAllCaps">false</item>
-
-
     </style>
 
     <style name="imageButton" parent="Widget.AppCompat.ImageButton">
@@ -39,12 +44,6 @@
         <item name="itemTextColor">@color/dustyWhite</item>
         <item name="android:textColorSecondary">@color/dustyWhite</item>
 
-    </style>
-
-
-    <style name="navDrawer" parent="Widget.Design.NavigationView">
-        <item name="itemTextColor">@color/dustyWhite</item>
-        <item name="itemIconTint">@color/fullWhite</item>
     </style>
 
     <style name="textViewDialog" parent="Widget.AppCompat.TextView">
@@ -90,10 +89,17 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="navigationViewStyle">@style/navDrawer</item>
+        <!--
+         <item name="navigationViewStyle">@style/navDrawer</item>
+        -->
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--
+        <item name="android:windowDisablePreview">true</item>
+        -->
+
 
     </style>
 
@@ -113,19 +119,18 @@
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
 
-        <item name="fontFamily">@font/medulaone</item>
+        <item name="fontFamily">@font/qhytsdakx</item>
         <item name="android:textColorSecondary">@color/dustyWhite</item>
         <item name="android:textColor">@color/dustyWhite</item>
 
         <item name="android:dialogTheme">@style/fragmentDialog</item>
 
-        <item name="navigationViewStyle">@style/navDrawer</item>
+        <item name="navigationViewStyle">@style/AppNavigationViewStyle</item>
         <item name="editTextStyle">@style/editText</item>
         <item name="checkboxStyle">@style/checkBox</item>
         <item name="android:buttonStyle">@style/button</item>
         <item name="imageButtonStyle">@style/imageButton</item>
-        <item name="actionMenuTextAppearance">@style/actionMenuTextAppearance</item>
-        <item name="android:actionMenuTextAppearance">@style/actionMenuTextAppearance</item>
+
 
     </style>
 

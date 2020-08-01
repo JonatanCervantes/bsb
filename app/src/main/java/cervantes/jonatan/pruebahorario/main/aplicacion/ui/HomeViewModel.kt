@@ -22,7 +22,7 @@ class HomeViewModel : ViewModel() {
     val textServicios: LiveData<String> = _textServicios
 
     private val _textExtra = MutableLiveData<String>().apply {
-        value = "¡No olvides que seguimos las mejores normas de higiene pa que no se enferme el nino!!"
+        value = ""
     }
     val textExtra: LiveData<String> = _textExtra
 

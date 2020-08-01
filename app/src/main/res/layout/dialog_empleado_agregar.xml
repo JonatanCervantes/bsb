@@ -75,6 +75,7 @@
                 android:text="@string/buttonCancelar"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                android:textSize="@dimen/regularDialogTextSize"
                 />
 
             <Button
@@ -84,6 +85,7 @@
                 android:text="@string/buttonAgregar"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                android:textSize="@dimen/regularDialogTextSize"
                 />
 
         </LinearLayout>

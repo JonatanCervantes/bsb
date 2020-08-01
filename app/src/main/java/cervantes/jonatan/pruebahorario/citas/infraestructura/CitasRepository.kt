@@ -69,6 +69,7 @@ object CitasRepository {
 
     fun guardarCita(cita: Cita, contexto:Context)  = CoroutineScope(Dispatchers.IO).launch{
         try {
+
             citaCollectionRef.add(cita).await()
             withContext(Dispatchers.Main) {
                 Toast.makeText(contexto, "Cita guardada correctamente", Toast.LENGTH_LONG).show()

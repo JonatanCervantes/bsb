@@ -89,15 +89,12 @@ class AgregarCitaDialog(val fechaCita:Calendar) : DialogFragment() {
                                         dialog?.dismiss()
                                     }
                                 } else {
-                                    withContext(Dispatchers.Main) {
-                                        Toast.makeText(contexto, "No se ha registrado la cita porque existiria un empalme de citas. Porfavor, pruebe seleccionando un servicio u hora distintos", Toast.LENGTH_LONG).show()
-                                    }
                                     loadingDialog.changeAnimationLaunch(false)
                                     dialog?.dismiss()
                                 }
                             } else {
                                 withContext(Dispatchers.Main) {
-                                    Toast.makeText(contexto, "Porfavor seleccione los detalles de la cita", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(contexto, resources.getString(R.string.avisoCita), Toast.LENGTH_LONG).show()
                                 }
                             }
 
@@ -109,13 +106,18 @@ class AgregarCitaDialog(val fechaCita:Calendar) : DialogFragment() {
                     }
                 }
             } else {
-                Toast.makeText(contexto, "Porfavor revise su conexion a internet", Toast.LENGTH_LONG).show()
+                Toast.makeText(contexto, resources.getString(R.string.avisoInternet), Toast.LENGTH_LONG).show()
             }
         }
 
-        tv_fechaCita.text = "Fecha seleccionada: ".plus(Editable.Factory.getInstance().newEditable(SimpleDateFormat("EEE dd/MM/yyyy")
+        tv_fechaCita.text = resources.getString(R.string.fechaSeleccionada).plus(Editable.Factory.getInstance().newEditable(SimpleDateFormat("EEE dd/MM/yyyy")
             .format(fechaCita.time)))
-        tv_horaCita.text = "Hora: ${fechaCita.get(Calendar.HOUR_OF_DAY).toString()}:${fechaCita.get(Calendar.MINUTE).toString()}"
+
+        val minutosLength = fechaCita.get(Calendar.MINUTE).toString().length
+        var compensador = ""
+        if(minutosLength <2)
+            compensador = "0"
+        tv_horaCita.text = resources.getString(R.string.hora).plus(fechaCita.get(Calendar.HOUR_OF_DAY).toString()).plus(":").plus(fechaCita.get(Calendar.MINUTE).toString()).plus(compensador)
     }
 
     private fun inflarEmpleados() {
@@ -166,7 +168,8 @@ class AgregarCitaDialog(val fechaCita:Calendar) : DialogFragment() {
         servicioSeleccionado = servicio
         iamgeViewServicioSeleccionada = imageView
         iamgeViewServicioSeleccionada?.alpha = 0.4f
-        tv_duracionAproximada.text = "Duración aproximada: ${servicio.duracion.toString()} minutos"
+        tv_duracionAproximada.text = resources.getString(R.string.duracionAproximada).plus(servicio.duracion).plus(resources.getString(R.string.minutos))
+        tv_precioAgregarCita.text = resources.getString(R.string.precio).plus(servicio.precio.toString())
     }
 
 

@@ -41,6 +41,7 @@
                 android:text="@string/buttonNo"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                android:textSize="@dimen/regularDialogTextSize"
                 />
 
             <Button
@@ -50,6 +51,7 @@
                 android:text="@string/buttonSi"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                android:textSize="@dimen/regularDialogTextSize"
                 />
 
         </LinearLayout>

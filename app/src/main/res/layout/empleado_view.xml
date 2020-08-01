@@ -31,7 +31,7 @@
                             android:layout_height="wrap_content"
                             android:autoSizeTextType="none"
                             android:gravity="center"
-                            android:textAllCaps="true"
+                            android:textAllCaps="false"
                             android:text="Nombre Empleado"
                             android:textStyle="bold"
                             android:textSize="@dimen/titlesTextSize" />
@@ -83,7 +83,7 @@
                                     android:id="@+id/tv_disponibilidadEmpleado"
                                     android:layout_width="@dimen/ceroWidth"
                                     android:layout_weight="4"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/smallMarginTop"
                                     android:gravity="center_vertical"
                                     android:textStyle="italic"

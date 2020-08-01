@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cargando..."
-        android:layout_marginVertical="@dimen/layoutsMargin"
+        android:layout_margin="@dimen/layoutsMargin"
         android:textAlignment="center"
         android:textSize="@dimen/subtitleTextSize"/>
 

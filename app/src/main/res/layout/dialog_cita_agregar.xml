@@ -22,7 +22,10 @@
                 android:text="@string/tituloAgregarCita"
                 android:gravity="center"
                 android:layout_margin="@dimen/layoutsMargin"
-                android:textSize="@dimen/titlesTextSize"/>
+                android:textSize="@dimen/titlesTextSize"
+                android:textStyle="bold"
+
+                />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,6 +50,7 @@
                 android:text="Seleccione un empleado"
                 android:textSize="@dimen/regularDialogTextSize"
                 android:layout_marginHorizontal="@dimen/layoutsMargin"
+                android:textStyle="bold"
                 />
 
 
@@ -61,6 +65,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:id="@+id/ll_viewEmpleados"
+                    android:layout_marginHorizontal="@dimen/layoutsMargin"
                     />
 
             </HorizontalScrollView>
@@ -71,6 +76,7 @@
                 android:text="Seleccione un servicio"
                 android:textSize="@dimen/regularDialogTextSize"
                 android:layout_marginHorizontal="@dimen/layoutsMargin"
+                android:textStyle="bold"
                 />
 
             <TextView
@@ -80,6 +86,17 @@
                 android:text="Duración aproximada: "
                 android:textSize="@dimen/regularDialogTextSize"
                 android:layout_marginHorizontal="@dimen/layoutsMargin"
+                android:textStyle="italic"
+                />
+
+            <TextView
+                android:id="@+id/tv_precioAgregarCita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Precio: "
+                android:textSize="@dimen/regularDialogTextSize"
+                android:layout_marginHorizontal="@dimen/layoutsMargin"
+                android:textStyle="italic"
                 />
 
             <HorizontalScrollView
@@ -93,6 +110,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:id="@+id/ll_viewServicios"
+                    android:layout_marginHorizontal="@dimen/layoutsMargin"
                     />
 
             </HorizontalScrollView>
@@ -110,6 +128,7 @@
                     android:text="@string/buttonCancelar"
                     android:layout_weight="1"
                     android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                    android:textSize="@dimen/regularDialogTextSize"
                     />
 
                 <Button
@@ -118,7 +137,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
                     android:layout_weight="1"
-                    android:text="@string/buttonAgregar" />
+                    android:text="@string/buttonAgregar"
+                    android:textSize="@dimen/regularDialogTextSize"
+                    />
 
             </LinearLayout>
 

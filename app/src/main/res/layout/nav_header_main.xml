@@ -17,7 +17,7 @@
         android:layout_width="@dimen/widthImageViewDrawer"
         android:layout_height="@dimen/heightImageViewDrawer"
         android:contentDescription="@string/nav_header_desc"
-        app:srcCompat="@drawable/img_geralt" />
+        app:srcCompat="@drawable/barber_brothers_logo" />
 
     <TextView
         android:id="@+id/tv_nombreUsuario"

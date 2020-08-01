@@ -2,6 +2,7 @@ package cervantes.jonatan.pruebahorario.utilidades
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import kotlinx.android.synthetic.main.dialog_loading.*
 import kotlinx.coroutines.*
 
 class LoadingDialog() : DialogFragment() {
+    private val TAG = "LoadingDialog"
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -29,20 +31,26 @@ class LoadingDialog() : DialogFragment() {
     }
 
     fun changeAnimation(completado: Boolean) {
-        this.isCancelable = true
-        if(completado) {
-            val animacion = view!!.findViewById<LottieAnimationView>(R.id.icon_loadingAnimation)
-            animacion.pauseAnimation()
-            animacion.setAnimation(R.raw.mcheck)
-            animacion.playAnimation()
-            tv_animacion.text = resources.getString(R.string.operacion_exitosa)
-        } else {
-            val animacion = view!!.findViewById<LottieAnimationView>(R.id.icon_loadingAnimation)
-            animacion.pauseAnimation()
-            animacion.setAnimation(R.raw.errorcross)
-            animacion.playAnimation()
-            tv_animacion.text = resources.getString(R.string.operacion_fallida)
+        try {
+            this.isCancelable = true
+            if(completado) {
+                val animacion = view!!.findViewById<LottieAnimationView>(R.id.icon_loadingAnimation)
+                animacion.pauseAnimation()
+                animacion.setAnimation(R.raw.mcheck)
+                animacion.playAnimation()
+                tv_animacion.text = resources.getString(R.string.operacion_exitosa)
+            } else {
+                val animacion = view!!.findViewById<LottieAnimationView>(R.id.icon_loadingAnimation)
+                animacion.pauseAnimation()
+                animacion.setAnimation(R.raw.errorcross)
+                animacion.playAnimation()
+                tv_animacion.text = resources.getString(R.string.empalmeCitas)
+            }
+        }catch (e:Exception) {
+            Log.d(TAG, e.message)
         }
+
+
     }
 
     fun dismissDialog() = CoroutineScope(Dispatchers.Main).launch  {
