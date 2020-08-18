@@ -12,12 +12,23 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
+    <TextView
+        android:id="@+id/tv_nombreEmpresa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nombre_empresa"
+        android:textSize="@dimen/subtitleTextSize"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:gravity="center"/>
+
     <ImageView
         android:id="@+id/iv_imagenLogo"
         android:layout_width="@dimen/widthImageViewDrawer"
         android:layout_height="@dimen/heightImageViewDrawer"
         android:contentDescription="@string/nav_header_desc"
-        app:srcCompat="@drawable/barber_brothers_logo" />
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/barber_brothers_logo"
+        />
 
     <TextView
         android:id="@+id/tv_nombreUsuario"
@@ -29,7 +40,7 @@
 
     <TextView
         android:id="@+id/tv_emailUsuario"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/regularDialogTextSize"
         android:text="@string/nav_header_subtitle" />

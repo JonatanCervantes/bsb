@@ -44,7 +44,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Correo: ejemplo@gmail.com)"
+            android:hint="Correo: ejemplo@gmail.com"
             android:layout_marginHorizontal="@dimen/layoutsMargin"
             android:layout_marginVertical="@dimen/verticalMarginEditText"
             android:id="@+id/et_emailEmpleado"
@@ -58,7 +58,9 @@
             android:layout_marginHorizontal="@dimen/layoutsMargin"
             android:layout_marginVertical="@dimen/verticalMarginEditText"
             android:id="@+id/et_horarioEmpleado"
-            android:inputType="text"
+            android:inputType="none"
+            android:focusable="false"
+
             />
 
 

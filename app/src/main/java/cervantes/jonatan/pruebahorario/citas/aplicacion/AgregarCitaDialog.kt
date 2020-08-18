@@ -28,7 +28,7 @@ import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AgregarCitaDialog(val fechaCita:Calendar) : DialogFragment() {
+class AgregarCitaDialog(val fechaCita:Calendar, val idEmpleadoSeleccionado:String) : DialogFragment() {
     lateinit var auth: FirebaseAuth
     lateinit var contexto: Context
     private var cliente: Usuario?= null
@@ -121,13 +121,13 @@ class AgregarCitaDialog(val fechaCita:Calendar) : DialogFragment() {
     }
 
     private fun inflarEmpleados() {
-        val listaEmpleados = EmpleadosRepository.obtenerListaEmpleados()
+        val listaEmpleados = arrayListOf(EmpleadosRepository.obtenerEmpleado(idEmpleadoSeleccionado))
         for (i in listaEmpleados.indices) {
             var vista = layoutInflater.inflate(R.layout.mini_empleado_servicio_view, null)
-            Glide.with(this).load(listaEmpleados[i].fotoPerfil).into(vista.iv_imagenEmpleadoServicio)
-            vista.tv_nombreEmpleadoServicio.text = listaEmpleados[i].nombre
+            Glide.with(this).load(listaEmpleados[i]!!.fotoPerfil).into(vista.iv_imagenEmpleadoServicio)
+            vista.tv_nombreEmpleadoServicio.text = listaEmpleados[i]!!.nombre
             vista.iv_imagenEmpleadoServicio.setOnClickListener {
-                seleccionarEmpleado(vista.iv_imagenEmpleadoServicio, listaEmpleados[i])
+                seleccionarEmpleado(vista.iv_imagenEmpleadoServicio, listaEmpleados[i]!!)
             }
             ll_viewEmpleados.addView(vista)
         }

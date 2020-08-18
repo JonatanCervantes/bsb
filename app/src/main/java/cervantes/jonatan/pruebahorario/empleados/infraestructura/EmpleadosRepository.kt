@@ -43,16 +43,25 @@ object EmpleadosRepository {
                     return@launch
                 }
                 Log.d(TAG, "Entrando al empleados snapshotlistener")
-
-                var listaEmpleadosProvisonal = ArrayList<Empleado>()
-                querySnapshot?.let {
-                    for (document in it) {
-                        var empleado = document.toObject<Empleado>()
-                        empleado.idDocumento = document.id
-                        listaEmpleadosProvisonal.add(empleado)
+                try {
+                    var listaEmpleadosProvisonal = ArrayList<Empleado>()
+                    querySnapshot?.let {
+                        for (document in it) {
+                            Log.d("EmpleadosRepository", "Antes de ToObject")
+                            var empleado = document.toObject<Empleado>()
+                            Log.d("EmpleadosRepository", "ToObject")
+                            empleado.idDocumento = document.id
+                            listaEmpleadosProvisonal.add(empleado)
+                        }
                         listaEmpleados.postValue(listaEmpleadosProvisonal)
                     }
+
+                }catch (e:Exception) {
+                    Log.d("EmpleadosRepository", e.message)
+                    e.printStackTrace()
                 }
+
+
             }
         }
     }
@@ -139,6 +148,15 @@ object EmpleadosRepository {
 
     fun obtenerListaEmpleados() : ArrayList<Empleado> {
         return listaEmpleados.value!!
+    }
+
+    fun obtenerEmpleado(idEmpleadoSeleccionado:String) : Empleado? {
+        obtenerListaEmpleados().forEach {
+            if(it.idDocumento == idEmpleadoSeleccionado) {
+                return it
+            }
+        }
+        return null
     }
 
 

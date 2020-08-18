@@ -66,6 +66,7 @@
                     android:orientation="horizontal"
                     android:id="@+id/ll_viewEmpleados"
                     android:layout_marginHorizontal="@dimen/layoutsMargin"
+                    android:gravity="center"
                     />
 
             </HorizontalScrollView>

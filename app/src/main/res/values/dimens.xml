@@ -30,6 +30,8 @@
     <dimen name="widthImageViewFragment">120dp</dimen>
     <dimen name="heightImageViewFragment">140dp</dimen>
 
+    <dimen name="heightAnimacionAbout">25dp</dimen>
+    <dimen name="biggerHeightAnimacionAbout">40dp</dimen>
 
     <dimen name="columnWeightImagenesAyuda">1</dimen>
     <dimen name="columnWeightTextosAyudas">4</dimen>
@@ -56,6 +58,9 @@
 
     <dimen name="paddingLoadingDialog">50dp</dimen>
     <dimen name="heightImageViewLoadingDialog">200dp</dimen>
+
+    <dimen name="widthLogoSplashScreen">200dp</dimen>
+    <dimen name="heightLogoSplashScreen">200dp</dimen>
 
 
 

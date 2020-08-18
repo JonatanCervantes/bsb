@@ -5,6 +5,14 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-kapt'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\Jonatan\\Desktop\\AplicacionesMoviles\\keys\\keyBsb.jks')
+            storePassword '123456'
+            keyPassword '123456'
+            keyAlias 'intentorelease'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
@@ -18,12 +26,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
 
 // To inline the bytecode built with JVM target 1.8 into
 // bytecode that is being built with JVM target 1.6. (e.g. navArgs)
@@ -35,6 +37,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
     }
 
 }

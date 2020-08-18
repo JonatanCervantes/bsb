@@ -17,7 +17,9 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.Navigation.findNavController
 import cervantes.jonatan.pruebahorario.R
+import cervantes.jonatan.pruebahorario.citas.aplicacion.ui.CitasFragment
 import cervantes.jonatan.pruebahorario.login.aplicacion.LoginActivity
 import cervantes.jonatan.pruebahorario.usuarios.infraestructura.UsuariosRepository
 import com.google.firebase.auth.FirebaseAuth
@@ -47,12 +49,15 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
             R.id.nav_home,
-            R.id.nav_citas,
+//            R.id.nav_citas,
+            R.id.nav_empleados,
             R.id.nav_servicios,
-            R.id.nav_empleados
+            R.id.nav_home
         ), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        navView.itemIconTintList = null
 
         CoroutineScope(Dispatchers.Main).launch {
             job.join()
@@ -86,6 +91,14 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+//    fun startCitasFragment(view:View) {
+////        val contexto = this
+////        var intent = Intent(contexto, CitasFragment::class.java)
+////        startActivity(intent)
+//        val navController = findNavController(R.id.nav_host_fragment)
+//        navController.navigate(R.id.nav_citas)
+//    }
+
     fun Intent.clearStack() {
         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     }
@@ -94,4 +107,11 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+
+
+
+
+
+
 }

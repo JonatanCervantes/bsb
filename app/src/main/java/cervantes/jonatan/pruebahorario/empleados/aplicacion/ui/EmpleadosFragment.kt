@@ -1,10 +1,12 @@
 package cervantes.jonatan.pruebahorario.empleados.aplicacion.ui
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -12,13 +14,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import cervantes.jonatan.pruebahorario.R
+import cervantes.jonatan.pruebahorario.citas.aplicacion.ui.CitasFragment
 import cervantes.jonatan.pruebahorario.empleados.aplicacion.AgregarEmpleadoDialog
 import cervantes.jonatan.pruebahorario.empleados.aplicacion.EmpleadoAdapter
 import cervantes.jonatan.pruebahorario.empleados.dominio.EmpleadoRV
 import cervantes.jonatan.pruebahorario.empleados.infraestructura.EmpleadosRepository
+import cervantes.jonatan.pruebahorario.login.aplicacion.LoginActivity
 import cervantes.jonatan.pruebahorario.usuarios.dominio.TiposUsuario
+import cervantes.jonatan.pruebahorario.usuarios.infraestructura.UsuariosRepository
 import kotlinx.android.synthetic.main.fragment_empleados.*
 import kotlinx.coroutines.*
 
@@ -27,10 +34,12 @@ class EmpleadosFragment : Fragment() {
     private lateinit var viewModel: EmpleadosViewModel
     private lateinit var adapter: EmpleadoAdapter
 
+
     companion object {
         var  eliminarActivado:Boolean = false
         var  modificarActivado:Boolean = false
         var adminFragmento: FragmentManager?= null
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -107,7 +116,8 @@ class EmpleadosFragment : Fragment() {
     private suspend fun inicializarAdapterVacio() : EmpleadoAdapter {
         var empleadoRvList = ArrayList<EmpleadoRV>()
         return EmpleadoAdapter(
-            empleadoRvList
+            empleadoRvList,
+            findNavController()
         )
     }
 
@@ -122,4 +132,6 @@ class EmpleadosFragment : Fragment() {
             rl_adminEmpleados.isVisible = true
         }
     }
+
+
 }

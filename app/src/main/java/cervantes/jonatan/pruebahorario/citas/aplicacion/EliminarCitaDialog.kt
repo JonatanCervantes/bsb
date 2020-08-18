@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import cervantes.jonatan.pruebahorario.R
 import cervantes.jonatan.pruebahorario.citas.infraestructura.CitasRepository
+import cervantes.jonatan.pruebahorario.utilidades.Connectivity
 import kotlinx.android.synthetic.main.dialog_cita_eliminar.*
 
 class EliminarCitaDialog : DialogFragment() {
@@ -28,8 +30,14 @@ class EliminarCitaDialog : DialogFragment() {
         }
 
         tv_si.setOnClickListener {
-            CitasRepository.eliminarCita(idDocumentoEliminar, contexto)
-            dialog!!.dismiss()
+            if(Connectivity.isOnline(contexto)) {
+                CitasRepository.eliminarCita(idDocumentoEliminar, contexto)
+                dialog!!.dismiss()
+            } else {
+                Toast.makeText(contexto, resources.getString(R.string.avisoInternet), Toast.LENGTH_LONG).show()
+            }
+
+
         }
     }
 

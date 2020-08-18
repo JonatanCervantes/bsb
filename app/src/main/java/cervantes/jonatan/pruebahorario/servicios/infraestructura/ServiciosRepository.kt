@@ -49,8 +49,8 @@ object ServiciosRepository {
                         var servicio = document.toObject<Servicio>()
                         servicio.idDocumento = document.id
                         listaServiciosProvisional.add(servicio)
-                        listaServicios.postValue(listaServiciosProvisional)
                     }
+                    listaServicios.postValue(listaServiciosProvisional)
                 }
             }
         }

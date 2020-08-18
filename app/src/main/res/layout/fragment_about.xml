@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:columnCount="1"
+    android:layout_margin="@dimen/layoutsMargin"
+    tools:context=".main.aplicacion.ui.AboutFragment">
+    <ScrollView>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/layoutsMargin">
+
+            <TextView
+                android:id="@+id/tv_tituloCreditos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/regularDialogTextSize"
+                android:text="Hola"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/layoutsMargin">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="@dimen/ceroWidth"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/biggerHeightAnimacionAbout"
+                    app:lottie_rawRes="@raw/mwritingdocument"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_creditos1"
+                    android:layout_width="@dimen/ceroWidth"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/regularDialogTextSize"
+                    android:text="Hola"
+                    android:layout_weight="@dimen/columnWeightTextosAyudas"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/heightSeparador"
+                android:layout_marginTop="@dimen/layoutsMargin"
+                android:layout_marginHorizontal="@dimen/horizontalMarginSeparador"
+                android:backgroundTint="@color/fullWhiteAlpha"
+                android:background="@color/fullWhiteAlpha" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/layoutsMargin">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="@dimen/ceroWidth"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/biggerHeightAnimacionAbout"
+                    app:lottie_rawRes="@raw/mpulsing"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_creditos2"
+                    android:layout_width="@dimen/ceroWidth"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/regularDialogTextSize"
+                    android:text="Hola"
+                    android:layout_weight="@dimen/columnWeightTextosAyudas"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/heightSeparador"
+                android:layout_marginTop="@dimen/layoutsMargin"
+                android:layout_marginHorizontal="@dimen/horizontalMarginSeparador"
+                android:backgroundTint="@color/fullWhiteAlpha"
+                android:background="@color/fullWhiteAlpha" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/layoutsMargin">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="@dimen/ceroWidth"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/biggerHeightAnimacionAbout"
+                    app:lottie_rawRes="@raw/mreddot"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_creditos3"
+                    android:layout_width="@dimen/ceroWidth"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/regularDialogTextSize"
+                    android:text="Hola"
+                    android:layout_weight="@dimen/columnWeightTextosAyudas"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/heightSeparador"
+                android:layout_marginTop="@dimen/layoutsMargin"
+                android:layout_marginHorizontal="@dimen/horizontalMarginSeparador"
+                android:backgroundTint="@color/fullWhiteAlpha"
+                android:background="@color/fullWhiteAlpha" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/layoutsMargin">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="@dimen/ceroWidth"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/heightAnimacionAbout"
+                    app:lottie_rawRes="@raw/mcheck"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_creditos4"
+                    android:layout_width="@dimen/ceroWidth"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/regularDialogTextSize"
+                    android:text="Hola"
+                    android:layout_weight="@dimen/columnWeightTextosAyudas"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/heightSeparador"
+                android:layout_marginTop="@dimen/layoutsMargin"
+                android:layout_marginHorizontal="@dimen/horizontalMarginSeparador"
+                android:backgroundTint="@color/fullWhiteAlpha"
+                android:background="@color/fullWhiteAlpha" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/layoutsMargin">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="@dimen/ceroWidth"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/heightAnimacionAbout"
+                    app:lottie_rawRes="@raw/errorcross"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_creditos5"
+                    android:layout_width="@dimen/ceroWidth"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/regularDialogTextSize"
+                    android:text="Hola"
+                    android:layout_weight="@dimen/columnWeightTextosAyudas"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/heightSeparador"
+                android:layout_marginTop="@dimen/layoutsMargin"
+                android:layout_marginHorizontal="@dimen/horizontalMarginSeparador"
+                android:backgroundTint="@color/fullWhiteAlpha"
+                android:background="@color/fullWhiteAlpha" />
+
+            <TextView
+                android:layout_margin="@dimen/layoutsMargin"
+                android:id="@+id/tv_creditos6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/regularDialogTextSize"
+                android:text="Hola"
+                android:layout_weight="@dimen/columnWeightTextosAyudas"
+                />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</GridLayout>
+

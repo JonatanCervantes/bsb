@@ -2,12 +2,12 @@
 
     <style name="AppNavigationViewStyle" parent="Widget.MaterialComponents.NavigationView">
         <item name="itemTextAppearance">@style/AppNavigationViewItemTextAppearance</item>
-        <item name="itemIconTint">@color/fullWhite</item>
+<!--        <item name="itemIconTint">@color/fullWhite</item>-->
         <item name="itemTextColor">@color/dustyWhite</item>
     </style>
 
     <style name="AppNavigationViewItemTextAppearance" parent="@style/TextAppearance.MaterialComponents.Subtitle2">
-        <item name="android:textSize">@dimen/regularDialogTextSize</item>
+        <item name="android:textSize">@dimen/smallTextSize</item>
         <item name="fontFamily">@font/qhytsdakx</item>
     </style>
 
@@ -77,10 +77,10 @@
     </style>
 
     <style name="TimePickerTheme" parent="Theme.AppCompat.Dialog">
-        <item name="android:windowBackground">@android:color/holo_green_dark</item>
-        <item name="colorPrimary">@android:color/holo_green_light</item>
-        <item name="colorPrimaryDark">@android:color/holo_green_dark</item>
-        <item name="colorAccent">#0F7E03</item>
+        <item name="android:windowBackground">@color/primaryBackground</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@color/dustyWhite</item>
 
     </style>
@@ -89,24 +89,15 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <!--
-         <item name="navigationViewStyle">@style/navDrawer</item>
-        -->
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <!--
-        <item name="android:windowDisablePreview">true</item>
-        -->
-
 
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="background">@drawable/background_main_theme</item>
-
-
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -120,9 +111,9 @@
         <item name="windowNoTitle">true</item>
 
         <item name="fontFamily">@font/qhytsdakx</item>
+<!--        Esta propiedad le da el color a los iconos del navigation drawer-->
         <item name="android:textColorSecondary">@color/dustyWhite</item>
         <item name="android:textColor">@color/dustyWhite</item>
-
         <item name="android:dialogTheme">@style/fragmentDialog</item>
 
         <item name="navigationViewStyle">@style/AppNavigationViewStyle</item>

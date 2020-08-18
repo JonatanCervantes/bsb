@@ -94,6 +94,15 @@
                 </LinearLayout>
         </LinearLayout>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_seleccionarEmpleado"
+            android:layout_marginHorizontal="@dimen/layoutsMargin"
+            android:text="@string/seleccionEmpleado"
+            android:textSize="@dimen/regularDialogTextSize"
+            />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/heightSeparador"

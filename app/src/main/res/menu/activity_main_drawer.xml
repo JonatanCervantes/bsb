@@ -1,42 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:showIn="navigation_view"
-
-
-    >
-
+    tools:showIn="navigation_view" >
         <group android:checkableBehavior="single">
                 <item
-
                     android:id="@+id/nav_home"
                     android:icon="@drawable/ic_baseline_home_24"
                     android:title="@string/menu_home" />
+
+<!--                Ya no es necesario debido a que hora cuando se selecciona "Citas", se envia-->
+<!--                a la parte de empleados, para seleccionar un empleado y continuar-->
+<!--                registrando una cita-->
+<!--                <item-->
+<!--                    android:id="@+id/nav_citas"-->
+<!--                    android:icon="@drawable/ic_baseline_calendar_today_24"-->
+<!--                    android:title="@string/menu_citas" />-->
                 <item
-                    android:id="@+id/nav_citas"
+                    android:id="@+id/nav_empleados"
                     android:icon="@drawable/ic_baseline_calendar_today_24"
                     android:title="@string/menu_citas" />
-                <item
 
+                <item
                     android:id="@+id/nav_servicios"
                     android:icon="@drawable/ic_baseline_format_list_bulleted_24"
                     android:title="@string/menu_servicios" />
-                <item
-                    android:id="@+id/nav_empleados"
-                    android:icon="@drawable/ic_baseline_face_24"
-                    android:title="@string/menu_empleados" />
         </group>
 
         <item android:title="Otros">
                 <menu >
                         <item
+                            android:id="@+id/nav_about"
+                            android:icon="@drawable/ic_baseline_info_24"
+                            android:title="@string/acercaDe"
+                            />
+                        <item
                             android:id="@+id/menu_cerrarSesion"
                             android:icon="@drawable/ic_baseline_exit_to_app_24"
                             android:title="@string/cerrarSesion"
                             android:onClick="cerrarSesion"
+                            />
+                </menu>
+        </item>
 
+        <item android:title="Contacto" >
+                <menu >
+                        <item
+                            android:icon="@drawable/ic_whatsappicon"
+                            android:title="@string/contacto_whatsapp1"
+                            />
+                        <item
+                            android:icon="@drawable/ic_whatsappicon"
+                            android:title="@string/contacto_whatsapp2"
+                            />
 
+                        <item
+                            android:icon="@drawable/ic_facebookicon"
+                            android:title="@string/contacto_facebook"
                             />
                 </menu>
         </item>

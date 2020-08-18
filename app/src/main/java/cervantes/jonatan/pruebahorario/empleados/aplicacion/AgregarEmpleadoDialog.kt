@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import cervantes.jonatan.pruebahorario.empleados.dominio.Empleado
 import cervantes.jonatan.pruebahorario.empleados.infraestructura.EmpleadosRepository
 import cervantes.jonatan.pruebahorario.utilidades.Connectivity
 import cervantes.jonatan.pruebahorario.utilidades.Disponibilidades
+import cervantes.jonatan.pruebahorario.utilidades.Par
 import kotlinx.android.synthetic.main.dialog_empleado_agregar.*
 import kotlinx.coroutines.*
 
@@ -26,6 +28,7 @@ class AgregarEmpleadoDialog : DialogFragment() {
 
     lateinit var contexto: Context
     private var  curFile: Uri? = null
+    var horariosMap:HashMap<String, ArrayList<Par>> = HashMap()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.dialog_empleado_agregar, container, false)
@@ -43,6 +46,12 @@ class AgregarEmpleadoDialog : DialogFragment() {
                     REQUEST_CODE_IMAGE_PICK
                 )
             }
+        }
+
+        et_horarioEmpleado.setOnClickListener {
+            var dialog: SeleccionarHorarioDialog =
+                SeleccionarHorarioDialog(this)
+            dialog.show(fragmentManager!!, "SeleccionarHorarioDialog")
         }
 
         tv_cancelarEmpleado.setOnClickListener {
@@ -72,7 +81,7 @@ class AgregarEmpleadoDialog : DialogFragment() {
                                 val imagen = EmpleadosRepository.uploadImageToStorageAsync("img_${nombre}", curFile, contexto)
                                 var empleado =
                                     Empleado(
-                                        0, nombre, email, horario,
+                                        0, nombre, email, horario, horariosMap,
                                         Disponibilidades.FUERADETURNO.name,
                                         imagen.await()
                                     )
@@ -103,6 +112,11 @@ class AgregarEmpleadoDialog : DialogFragment() {
                 iv_imagenEmpleado.setImageURI(curFile)
             }
         }
+    }
+
+    fun establecerHorario(horario:String, horariosMap:HashMap<String, ArrayList<Par>>){
+        et_horarioEmpleado.text = Editable.Factory.getInstance().newEditable(horario)
+        this.horariosMap = horariosMap
     }
 
 }

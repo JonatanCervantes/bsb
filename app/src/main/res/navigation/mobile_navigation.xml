@@ -12,10 +12,30 @@
         tools:layout="@layout/fragment_home"/>
 
     <fragment
+        android:id="@+id/nav_about"
+        android:name="cervantes.jonatan.pruebahorario.main.aplicacion.ui.AboutFragment"
+        android:label="@string/menu_about"
+        tools:layout="@layout/fragment_about"/>
+
+    <fragment
         android:id="@+id/nav_citas"
         android:name="cervantes.jonatan.pruebahorario.citas.aplicacion.ui.CitasFragment"
         android:label="@string/menu_citas"
-        tools:layout="@layout/fragment_citas"/>
+        tools:layout="@layout/fragment_citas">
+        <argument
+            android:name="idEmpleado"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_empleados"
+        android:name="cervantes.jonatan.pruebahorario.empleados.aplicacion.ui.EmpleadosFragment"
+        android:label="@string/menu_empleados"
+        tools:layout="@layout/fragment_empleados" >
+        <action
+            android:id="@+id/action_nav_empleados_to_nav_citas"
+            app:destination="@id/nav_citas" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_servicios"
@@ -23,9 +43,5 @@
         android:label="@string/menu_servicios"
         tools:layout="@layout/fragment_servicios" />
 
-    <fragment
-        android:id="@+id/nav_empleados"
-        android:name="cervantes.jonatan.pruebahorario.empleados.aplicacion.ui.EmpleadosFragment"
-        android:label="@string/menu_empleados"
-        tools:layout="@layout/fragment_empleados" />
+
 </navigation>

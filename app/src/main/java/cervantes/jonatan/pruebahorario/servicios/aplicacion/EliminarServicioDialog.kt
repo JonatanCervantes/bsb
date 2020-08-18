@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import cervantes.jonatan.pruebahorario.R
 import cervantes.jonatan.pruebahorario.servicios.infraestructura.ServiciosRepository
+import cervantes.jonatan.pruebahorario.utilidades.Connectivity
 import kotlinx.android.synthetic.main.dialog_servicio_eliminar.*
 
 class EliminarServicioDialog : DialogFragment() {
@@ -30,8 +32,13 @@ class EliminarServicioDialog : DialogFragment() {
         }
 
         tv_siServicio.setOnClickListener {
-            ServiciosRepository.eliminarServicio(idServicioEliminar, contexto)
-            dialog!!.dismiss()
+            if(Connectivity.isOnline(contexto)) {
+                ServiciosRepository.eliminarServicio(idServicioEliminar, contexto)
+                dialog!!.dismiss()
+            } else {
+                Toast.makeText(contexto, resources.getString(R.string.avisoInternet), Toast.LENGTH_LONG).show()
+            }
+
         }
     }
 

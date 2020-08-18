@@ -47,7 +47,7 @@ class LoadingDialog() : DialogFragment() {
                 tv_animacion.text = resources.getString(R.string.empalmeCitas)
             }
         }catch (e:Exception) {
-            Log.d(TAG, e.message)
+//            Log.d(TAG, e.message)
         }
 
 

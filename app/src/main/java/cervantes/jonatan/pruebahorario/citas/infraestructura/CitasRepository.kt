@@ -49,7 +49,8 @@ object CitasRepository {
             try {
                 val querySnapshot = citaCollectionRef
                     .whereGreaterThanOrEqualTo("fechaInicio", Timestamp(FechasHelper.obtenerFechaQueryActual().time))
-                    .whereLessThan("fechaInicio", Timestamp(FechasHelper.obtenerFechaQueryFutura().time)).get().await()
+                    .whereLessThan("fechaInicio", Timestamp(FechasHelper.obtenerFechaQueryFutura().time))
+                    .get().await()
 
                 var listaCitasProvisional = ArrayList<Cita>()
                 querySnapshot?.let {
@@ -69,7 +70,6 @@ object CitasRepository {
 
     fun guardarCita(cita: Cita, contexto:Context)  = CoroutineScope(Dispatchers.IO).launch{
         try {
-
             citaCollectionRef.add(cita).await()
             withContext(Dispatchers.Main) {
                 Toast.makeText(contexto, "Cita guardada correctamente", Toast.LENGTH_LONG).show()
@@ -104,8 +104,10 @@ object CitasRepository {
         if(listaCitas.value != null) {
             val iterator = listaCitas.value!!.iterator()
             iterator.forEach {
-                if(verificarEmpalme(cita, it))
-                    return false
+                if(cita.empleado.idDocumento == it.empleado.idDocumento) {
+                    if(verificarEmpalme(cita, it))
+                        return false
+                }
             }
         }
         return true

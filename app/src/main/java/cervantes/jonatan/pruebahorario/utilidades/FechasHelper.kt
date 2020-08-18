@@ -63,6 +63,10 @@ object FechasHelper {
         return fechaActualReal
     }
 
+    fun obtenerDayOfWeekFechaParaCitas() :Int {
+        return fechaParaCitas.get(Calendar.DAY_OF_WEEK)
+    }
+
 
 
 

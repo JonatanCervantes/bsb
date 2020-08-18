@@ -103,7 +103,7 @@ class AgregarServicioDialog : DialogFragment() {
                 }
 
             } else {
-                Toast.makeText(contexto, "Porfavor revise su conexion a internet", Toast.LENGTH_LONG).show()
+                Toast.makeText(contexto, resources.getString(R.string.avisoInternet), Toast.LENGTH_LONG).show()
             }
         }
     }

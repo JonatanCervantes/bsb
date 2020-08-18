@@ -3,6 +3,7 @@ package cervantes.jonatan.pruebahorario.citas.aplicacion.ui
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,26 +53,27 @@ class CitasFragment : Fragment() {
             EmpleadosRepository
             CitasRepository
         }
-//
-//        CoroutineScope(Dispatchers.Main).launch {
-//            inicializarBarraSuperiorLaunch(view)
-//        }
 
         configurarTvFechaActual(view)
         configurarBotones(view)
 
+        viewModel.empleadoSeleccionado.value = arguments!!.getString("idEmpleado")
+
         viewModel?.listaCitasRV!!.observe(this, Observer {
             CoroutineScope(Dispatchers.Main).launch {
-                tablaAdapter = TablaAdapter(it,view!!)
+                tablaAdapter = TablaAdapter(it,view!!, viewModel.obtenerEmpleadoSeleccionado())
                 tablaAdapter.inflarVista()
             }
         })
 
         CitasRepository.listaCitas.observe(this, Observer {
             CoroutineScope(Dispatchers.Default).launch {
-                viewModel?.llenarListaRecyclerView(it, resources.getStringArray(R.array.horarios))
+                viewModel?.llenarListaRecyclerView(it, viewModel.obtenerEmpleadoSeleccionado())
             }
         })
+
+
+
     }
 
 
@@ -84,20 +86,20 @@ class CitasFragment : Fragment() {
         tv_diaActual.text = Editable.Factory.getInstance().newEditable(SimpleDateFormat("EEE dd/MM/yyyy").format(
             FechasHelper.obtenerFechaParaCitas().time))
 
-        tv_diaActual.setOnClickListener {
-            val copiaFecha = FechasHelper.obtenerCopiaFechaParaCitas()
-            val dp = DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
-                copiaFecha.set(Calendar.YEAR, year)
-                copiaFecha.set(Calendar.MONTH, month)
-                copiaFecha.set(Calendar.DAY_OF_MONTH, day)
-                tv_diaActual.text = Editable.Factory.getInstance().newEditable(SimpleDateFormat("EEE dd/MM/yyyy").format(
-                    copiaFecha.time))
-            }
-            DatePickerDialog(view.context, R.style.TimePickerTheme, dp,
-                copiaFecha.get(Calendar.YEAR),
-                copiaFecha.get(Calendar.MONTH),
-                copiaFecha.get(Calendar.DAY_OF_MONTH)).show()
-        }
+//        tv_diaActual.setOnClickListener {
+//            val copiaFecha = FechasHelper.obtenerCopiaFechaParaCitas()
+//            val dp = DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
+//                copiaFecha.set(Calendar.YEAR, year)
+//                copiaFecha.set(Calendar.MONTH, month)
+//                copiaFecha.set(Calendar.DAY_OF_MONTH, day)
+//                tv_diaActual.text = Editable.Factory.getInstance().newEditable(SimpleDateFormat("EEE dd/MM/yyyy").format(
+//                    copiaFecha.time))
+//            }
+//            DatePickerDialog(view.context, R.style.TimePickerTheme, dp,
+//                copiaFecha.get(Calendar.YEAR),
+//                copiaFecha.get(Calendar.MONTH),
+//                copiaFecha.get(Calendar.DAY_OF_MONTH)).show()
+//        }
     }
 
     private fun configurarBotones(view:View) {

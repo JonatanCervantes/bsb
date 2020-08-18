@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/layoutsMargin"
+    android:background="@drawable/background_empleados_dialog"
+   >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/layoutsPadding"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_tituloSeleccionarHorario"
+            android:text="@string/tituloSeleccionHorario"
+            android:gravity="center"
+            android:layout_margin="@dimen/layoutsMargin"
+            android:textSize="@dimen/titlesTextSize"/>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layoutsMargin"
+            android:columnCount="2">
+
+            <CheckBox
+                android:id="@+id/checkMonday"
+                android:layout_height="wrap_content"
+                android:text="@string/lunes"
+                android:layout_marginHorizontal="@dimen/layoutsMargin"
+                android:layout_columnWeight="1"
+
+                />
+
+            <CheckBox
+                android:id="@+id/checkTuesday"
+                android:layout_height="wrap_content"
+                android:text="@string/martes"
+                android:layout_marginHorizontal="@dimen/layoutsMargin"
+                android:layout_columnWeight="1"
+
+                />
+            <CheckBox
+                android:id="@+id/checkWednesday"
+                android:layout_height="wrap_content"
+                android:text="@string/miercoles"
+                android:layout_marginHorizontal="@dimen/layoutsMargin"
+                android:layout_columnWeight="1"
+
+                />
+            <CheckBox
+                android:id="@+id/checkThursday"
+                android:layout_height="wrap_content"
+                android:text="@string/jueves"
+                android:layout_marginHorizontal="@dimen/layoutsMargin"
+                android:layout_columnWeight="1"
+
+                />
+            <CheckBox
+                android:id="@+id/checkFriday"
+                android:layout_height="wrap_content"
+                android:text="@string/viernes"
+                android:layout_marginHorizontal="@dimen/layoutsMargin"
+                android:layout_columnWeight="1"
+
+                />
+            <CheckBox
+                android:id="@+id/checkSaturday"
+                android:layout_height="wrap_content"
+                android:text="@string/sabado"
+                android:layout_marginHorizontal="@dimen/layoutsMargin"
+                android:layout_columnWeight="1"
+
+                />
+            <CheckBox
+                android:id="@+id/checkSunday"
+                android:layout_height="wrap_content"
+                android:text="@string/domingo"
+                android:layout_marginHorizontal="@dimen/layoutsMargin"
+                android:layout_columnWeight="1"
+                />
+
+
+        </GridLayout>
+
+
+
+        <EditText
+            android:id="@+id/et_horaInicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Hora de entrada"
+            android:layout_marginHorizontal="@dimen/layoutsMargin"
+            android:layout_marginVertical="@dimen/verticalMarginEditText"
+            android:focusable="false"
+            />
+
+        <EditText
+            android:id="@+id/et_horaFin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Hora de salida"
+            android:layout_marginHorizontal="@dimen/layoutsMargin"
+            android:layout_marginVertical="@dimen/verticalMarginEditText"
+            android:focusable="false"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_agregarSemiHorario"
+            android:text="Agregar horario"
+            android:layout_marginHorizontal="50dp"
+            android:textSize="@dimen/regularDialogTextSize"
+            android:layout_marginVertical="@dimen/verticalMarginEditText"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/layoutsMargin"
+            android:layout_marginVertical="@dimen/verticalMarginEditText"
+            android:id="@+id/tv_horarioSeleccionado"
+            android:textSize="@dimen/regularDialogTextSize"
+            android:textColor="@color/dustyWhite"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/layoutsMargin">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_cancelarHorario"
+                android:text="@string/buttonCancelar"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                android:textSize="@dimen/regularDialogTextSize"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_agregarHorario"
+                android:text="Listo"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/horizontalMarginButtons"
+                android:textSize="@dimen/regularDialogTextSize"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
