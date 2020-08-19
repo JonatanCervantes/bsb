@@ -16,7 +16,6 @@
                     android:layout_height="@dimen/heightImageViewFragment"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
-                    android:src="@mipmap/ic_launcher"
                     android:id="@+id/iv_imagenServicio"
                     android:layout_marginHorizontal="@dimen/layoutsMargin"/>
 

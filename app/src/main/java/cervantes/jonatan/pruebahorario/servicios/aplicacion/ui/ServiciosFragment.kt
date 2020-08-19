@@ -65,6 +65,7 @@ class ServiciosFragment : Fragment() {
 
         fab_eliminarServicio.setOnClickListener {
             viewModel.cambiarEstado(0)
+
         }
 
         viewModel.eliminarActivado.observe(this, Observer {

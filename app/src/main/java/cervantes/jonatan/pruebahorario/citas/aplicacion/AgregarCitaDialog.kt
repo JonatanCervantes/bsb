@@ -13,6 +13,7 @@ import cervantes.jonatan.pruebahorario.citas.dominio.Cita
 import cervantes.jonatan.pruebahorario.empleados.dominio.Empleado
 import cervantes.jonatan.pruebahorario.citas.infraestructura.CitasRepository
 import cervantes.jonatan.pruebahorario.empleados.infraestructura.EmpleadosRepository
+import cervantes.jonatan.pruebahorario.notificaciones.NotificacionesHelper
 import cervantes.jonatan.pruebahorario.servicios.infraestructura.ServiciosRepository
 import cervantes.jonatan.pruebahorario.usuarios.infraestructura.UsuariosRepository
 import cervantes.jonatan.pruebahorario.servicios.dominio.Servicio
@@ -52,6 +53,17 @@ class AgregarCitaDialog(val fechaCita:Calendar, val idEmpleadoSeleccionado:Strin
             inflarServicios()
         }
 
+        tv_fechaCita.text = resources.getString(R.string.fechaSeleccionada)
+            .plus(Editable.Factory.getInstance().newEditable(SimpleDateFormat("EEE dd/MM/yyyy")
+            .format(fechaCita.time)))
+
+        val minutosLength = fechaCita.get(Calendar.MINUTE).toString().length
+        var compensador = ""
+        if(minutosLength <2)
+            compensador = "0"
+        tv_horaCita.text = resources.getString(R.string.hora).plus(fechaCita.get(Calendar.HOUR_OF_DAY)
+            .toString()).plus(":").plus(fechaCita.get(Calendar.MINUTE).toString()).plus(compensador)
+
         tv_cancel.setOnClickListener {
             dialog!!.dismiss()
         }
@@ -86,6 +98,16 @@ class AgregarCitaDialog(val fechaCita:Calendar, val idEmpleadoSeleccionado:Strin
 
                                     trabajoGuardarCita.invokeOnCompletion {
                                         loadingDialog.changeAnimationLaunch(true)
+                                        val message = resources.getString(R.string.messageNotificacion).plus(cliente!!.nombre)
+                                            .plus(" ")
+                                            .plus(tv_fechaCita.text)
+                                            .plus(" ")
+                                            .plus(tv_horaCita.text)
+                                        NotificacionesHelper.enviarNotificacionesLaunch(
+                                            resources.getString(R.string.titleNotificacion),
+                                            message,
+                                            arrayListOf(cliente!!.token, empleado.token)
+                                        )
                                         dialog?.dismiss()
                                     }
                                 } else {
@@ -110,14 +132,7 @@ class AgregarCitaDialog(val fechaCita:Calendar, val idEmpleadoSeleccionado:Strin
             }
         }
 
-        tv_fechaCita.text = resources.getString(R.string.fechaSeleccionada).plus(Editable.Factory.getInstance().newEditable(SimpleDateFormat("EEE dd/MM/yyyy")
-            .format(fechaCita.time)))
 
-        val minutosLength = fechaCita.get(Calendar.MINUTE).toString().length
-        var compensador = ""
-        if(minutosLength <2)
-            compensador = "0"
-        tv_horaCita.text = resources.getString(R.string.hora).plus(fechaCita.get(Calendar.HOUR_OF_DAY).toString()).plus(":").plus(fechaCita.get(Calendar.MINUTE).toString()).plus(compensador)
     }
 
     private fun inflarEmpleados() {

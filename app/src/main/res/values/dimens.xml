@@ -21,6 +21,7 @@
     <dimen name="titlesTextSize">30sp</dimen>
     <dimen name="subtitleTextSize">26sp</dimen>
     <dimen name="regularDialogTextSize">22sp</dimen>
+    <dimen name="smallerRegularTextSize">20sp</dimen>
     <dimen name="smallTextSize">16sp</dimen>
 
     <dimen name="imageViewDialogWidth">100dp</dimen>

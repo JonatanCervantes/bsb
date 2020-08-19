@@ -18,7 +18,6 @@
                     android:layout_height="@dimen/imageViewDialogHeight"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
-                    android:src="@mipmap/ic_launcher"
                     />
 
                 <TextView

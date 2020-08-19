@@ -15,6 +15,7 @@ import cervantes.jonatan.pruebahorario.R
 import cervantes.jonatan.pruebahorario.utilidades.LoadingDialog
 import cervantes.jonatan.pruebahorario.empleados.dominio.Empleado
 import cervantes.jonatan.pruebahorario.empleados.infraestructura.EmpleadosRepository
+import cervantes.jonatan.pruebahorario.notificaciones.FirebaseService
 import cervantes.jonatan.pruebahorario.utilidades.Connectivity
 import cervantes.jonatan.pruebahorario.utilidades.Disponibilidades
 import cervantes.jonatan.pruebahorario.utilidades.Par
@@ -79,11 +80,13 @@ class AgregarEmpleadoDialog : DialogFragment() {
                                 loadingDialog.show(fragmentManager!!, "LoadingDialog")
 
                                 val imagen = EmpleadosRepository.uploadImageToStorageAsync("img_${nombre}", curFile, contexto)
+                                val token = FirebaseService.token
                                 var empleado =
                                     Empleado(
                                         0, nombre, email, horario, horariosMap,
                                         Disponibilidades.FUERADETURNO.name,
-                                        imagen.await()
+                                        imagen.await(),
+                                        token = token!!
                                     )
                                 val trabajoGuardarEmpleado = EmpleadosRepository.guardarEmpleado(empleado, contexto)
                                 trabajoGuardarEmpleado.invokeOnCompletion {

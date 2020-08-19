@@ -35,6 +35,10 @@
     <string name="tituloEliminarServicio">Eliminar servicio</string>
     <string name="tituloAgregarCita">Detalles de la cita</string>
     <string name="tituloEliminarCita">Cancelar cita</string>
+    <string name="titleNotificacion">Barber Brothers - Nueva Cita</string>
+    <string name="messageNotificacion">Cita registrada para el cliente: </string>
+    <string name="messageNotificacion2"> con fecha: </string>
+
 
     <string name="lunes">Lunes</string>
     <string name="martes">Martes</string>

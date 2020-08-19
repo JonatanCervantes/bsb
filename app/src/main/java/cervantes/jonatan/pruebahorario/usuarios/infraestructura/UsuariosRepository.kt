@@ -1,12 +1,14 @@
 package cervantes.jonatan.pruebahorario.usuarios.infraestructura
 
 import android.util.Log
+import cervantes.jonatan.pruebahorario.notificaciones.FirebaseService
 import cervantes.jonatan.pruebahorario.usuarios.dominio.Usuario
 import cervantes.jonatan.pruebahorario.usuarios.dominio.TiposUsuario
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
@@ -54,7 +56,11 @@ object UsuariosRepository {
         )
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                usuariosCollectionRef.add(usuario).await()
+                val documento = usuariosCollectionRef.add(usuario).await()
+                documento.update("idDocumento", documento.id)
+                FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+                    documento.update("token", it.token)
+                }
                 Log.d("LoginActivity", "Usuario registrado correctamente")
             } catch (e:Exception) {
                 Log.d("LoginActivity", e.message)
@@ -108,6 +114,19 @@ object UsuariosRepository {
 
     fun olvidarUsuarioActual() {
         this.usuarioActual == null
+    }
+
+    fun actualizarTokenUsuario(idDocumento:String, token:String) = CoroutineScope(Dispatchers.IO).launch {
+        try {
+            usuariosCollectionRef.document(idDocumento).update("token", token).await()
+        }catch (e:Exception) {
+            Log.d(TAG, e.message)
+        }
+
+    }
+
+    fun getUsuarioActual() : Usuario?{
+        return usuarioActual
     }
 
 

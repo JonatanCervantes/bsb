@@ -54,11 +54,11 @@
                 />
 
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/hscrollViewEmpleados"
-                >
+<!--            <HorizontalScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/hscrollViewEmpleados"-->
+<!--                >-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -67,9 +67,10 @@
                     android:id="@+id/ll_viewEmpleados"
                     android:layout_marginHorizontal="@dimen/layoutsMargin"
                     android:gravity="center"
+                    android:layout_gravity="center"
                     />
 
-            </HorizontalScrollView>
+<!--            </HorizontalScrollView>-->
 
             <TextView
                 android:layout_width="match_parent"

@@ -21,8 +21,11 @@ import androidx.navigation.Navigation.findNavController
 import cervantes.jonatan.pruebahorario.R
 import cervantes.jonatan.pruebahorario.citas.aplicacion.ui.CitasFragment
 import cervantes.jonatan.pruebahorario.login.aplicacion.LoginActivity
+import cervantes.jonatan.pruebahorario.notificaciones.FirebaseService
 import cervantes.jonatan.pruebahorario.usuarios.infraestructura.UsuariosRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
@@ -39,6 +42,12 @@ class MainActivity : AppCompatActivity() {
 
         val job = CoroutineScope(Dispatchers.IO).launch {
             auth = FirebaseAuth.getInstance()
+
+            FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+            FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+                FirebaseService.token = it.token
+            }
+
         }
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)

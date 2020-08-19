@@ -12,7 +12,8 @@ data class Empleado ( var idEmpleado: Int = 0,
                       },
                       var disponibilidad:String = Disponibilidades.FUERADETURNO.name,
                      var fotoPerfil: String = "",
-                      var idDocumento:String = ""
+                      var idDocumento:String = "",
+                      var token:String = ""
 ) {
 
 
