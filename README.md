@@ -1,6 +1,7 @@
-App Android Barber Shop Brothers
+Android App Barber Shop Brothers
 
-Aplicación móvil para la administración de citas, barberos, y servicios ofrecidos por la barbería.
-
-Utiliza kotlin, firebase y sus diferentes servicios.
+Developed an android app using Kotlin for a local barber shop. 
+Implemented CRUD operations to manage appointments, employees and services offered. 
+Incorporated Firebase for: authentications, firestore, storage and push notifications. 
+Use of coroutines and MVVM.
 
